@@ -174,38 +174,50 @@ function mastermart_render_settings_page() {
                 </table>
 
                 <h3 style="font-size: 18px; border-bottom: 2px solid #FF6500; padding-bottom: 8px; margin-top: 30px; color: #0B192C;">🐙 GitHub Automatic Theme Updates</h3>
-                <p style="font-size: 14px; color: #64748b; margin-top: 0;">
-                    আপনার GitHub রিপোজিটরিতে কোড পুশ করার পর সরাসরি ওয়ার্ডপ্রেস অ্যাডমিন থেকে ১-ক্লিকে থিম আপডেট করার ব্যবস্থা।
-                </p>
+                <div style="background: #F0FDF4; border: 1.5px solid #86EFAC; border-radius: 10px; padding: 16px; margin-bottom: 20px; display: flex; align-items: center; gap: 14px;">
+                    <span style="font-size: 28px;">⚡</span>
+                    <div>
+                        <strong style="color: #166534; font-size: 15px; display: block;">GitHub Auto-Updater সক্রিয় ও সম্পূর্ণ প্রস্তুত (Zero Setup Required)</strong>
+                        <span style="color: #15803D; font-size: 13px;">
+                            অফিসিয়াল রিপোজিটরি <code>ceoahasamhabib/mastermart</code> (<code>main</code> ব্রাঞ্চ) এর সাথে থিমটি স্বয়ংক্রিয়ভাবে যুক্ত রয়েছে। <strong>আপনার কোনো কিছু সেট করতে হবে না।</strong> গিটহাবে কোড পুশ করলে বা নতুন ভার্সন দিলে ওয়ার্ডপ্রেস ব্যাকগ্রাউন্ডে স্বয়ংক্রিয়ভাবে থিমটি আপডেট করে নেবে।
+                        </span>
+                    </div>
+                </div>
+
                 <table class="form-table">
                     <tr>
                         <th scope="row"><label for="mastermart_github_repo">GitHub Repository</label></th>
                         <td>
-                            <input type="text" id="mastermart_github_repo" name="mastermart_github_repo" value="<?php echo esc_attr( get_option( 'mastermart_github_repo', '' ) ); ?>" class="regular-text" placeholder="e.g. username/mastermart or full URL">
-                            <p class="description">আপনার GitHub রিপোজিটরির নাম দিন (যেমন: <code>your-username/mastermart</code>)।</p>
+                            <input type="text" id="mastermart_github_repo" name="mastermart_github_repo" value="<?php echo esc_attr( get_option( 'mastermart_github_repo', 'ceoahasamhabib/mastermart' ) ); ?>" class="regular-text" placeholder="ceoahasamhabib/mastermart">
+                            <p class="description">ডিফল্টভাবে <code>ceoahasamhabib/mastermart</code> সেট করা আছে। পরিবর্তনের প্রয়োজন নেই।</p>
                         </td>
                     </tr>
                     <tr>
                         <th scope="row"><label for="mastermart_github_branch">Repository Branch</label></th>
                         <td>
                             <input type="text" id="mastermart_github_branch" name="mastermart_github_branch" value="<?php echo esc_attr( get_option( 'mastermart_github_branch', 'main' ) ); ?>" class="regular-text" placeholder="main">
-                            <p class="description">ডিফল্ট ব্রাঞ্চ (সাধারণত: <code>main</code>)।</p>
+                            <p class="description">ডিফল্ট ব্রাঞ্চ: <code>main</code>।</p>
                         </td>
                     </tr>
                     <tr>
-                        <th scope="row"><label for="mastermart_github_token">Personal Access Token (Private Repo)</label></th>
+                        <th scope="row"><label for="mastermart_github_token">Personal Access Token (ঐচ্ছিক)</label></th>
                         <td>
                             <input type="password" id="mastermart_github_token" name="mastermart_github_token" value="<?php echo esc_attr( get_option( 'mastermart_github_token', '' ) ); ?>" class="regular-text" placeholder="ghp_xxxxxxxxxxxx">
-                            <p class="description">রিপোজিটরি প্রাইভেট হলে GitHub Personal Access Token (classic: repo scope) দিন। পাবলিক হলে খালি রাখুন।</p>
+                            <p class="description">পাবলিক রিপোজিটরির ক্ষেত্রে খালি রাখুন। কোনো টোকেন লাগবে না।</p>
                         </td>
                     </tr>
                     <tr>
-                        <th scope="row">আপডেট চেক করুন</th>
+                        <th scope="row">তাৎক্ষণিক আপডেট ও সিঙ্ক</th>
                         <td>
-                            <button type="button" class="button" id="mastermart-check-update-btn" onclick="mastermartCheckGitHubUpdate()" style="display: inline-flex; align-items: center; gap: 6px;">
-                                <span>🔄 Check for GitHub Updates Now</span>
-                            </button>
-                            <span id="mastermart-update-status" style="margin-left: 12px; font-weight: 600; font-size: 13.5px;"></span>
+                            <div style="display: flex; gap: 10px; flex-wrap: wrap; align-items: center;">
+                                <button type="button" class="button button-secondary" id="mastermart-check-update-btn" onclick="mastermartCheckGitHubUpdate()" style="display: inline-flex; align-items: center; gap: 6px; font-weight: 600;">
+                                    <span>🔄 Check for Updates Now</span>
+                                </button>
+                                <button type="button" class="button" id="mastermart-sync-update-btn" onclick="mastermartForceSyncGitHub()" style="display: inline-flex; align-items: center; gap: 6px; font-weight: 600; background: #0B192C; color: #fff; border-color: #071326;">
+                                    <span>⚡ Force Sync / Re-install from GitHub</span>
+                                </button>
+                            </div>
+                            <div id="mastermart-update-status" style="margin-top: 10px; font-weight: 600; font-size: 13.5px;"></div>
                         </td>
                     </tr>
                 </table>
@@ -261,6 +273,41 @@ function mastermart_render_settings_page() {
             } else {
                 status.style.color = '#dc2626';
                 status.textContent = '✕ ' + (res.data.message || 'ত্রুটি হয়েছে');
+            }
+        })
+        .catch(function(){
+            btn.disabled = false;
+            status.style.color = '#dc2626';
+            status.textContent = 'সার্ভারের সাথে সংযোগ স্থাপন সম্ভব হয়নি।';
+        });
+    }
+
+    function mastermartForceSyncGitHub() {
+        if (!confirm('আপনি কি নিশ্চিত যে GitHub (main ব্রাঞ্চ) থেকে সর্বশেষ কোড ডাউনলোড করে থিমটি রি-ইনস্টল/সিঙ্ক করতে চান?')) {
+            return;
+        }
+
+        var btn = document.getElementById('mastermart-sync-update-btn');
+        var status = document.getElementById('mastermart-update-status');
+        btn.disabled = true;
+        status.textContent = 'GitHub থেকে সর্বশেষ কোড ডাউনলোড ও ইনস্টল করা হচ্ছে, অনুগ্রহ করে অপেক্ষা করুন...';
+        status.style.color = '#0284c7';
+
+        var formData = new FormData();
+        formData.append('action', 'mastermart_force_sync_github');
+        formData.append('nonce', '<?php echo esc_js( wp_create_nonce( 'mastermart_options_nonce' ) ); ?>');
+
+        fetch(ajaxurl, { method: 'POST', body: formData })
+        .then(function(r){ return r.json(); })
+        .then(function(res){
+            btn.disabled = false;
+            if (res.success) {
+                status.style.color = '#16a34a';
+                status.textContent = '✓ ' + res.data.message;
+                setTimeout(function(){ location.reload(); }, 2000);
+            } else {
+                status.style.color = '#dc2626';
+                status.textContent = '✕ ' + (res.data.message || 'সিঙ্ক ব্যর্থ হয়েছে');
             }
         })
         .catch(function(){
