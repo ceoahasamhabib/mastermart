@@ -37,17 +37,10 @@ class MasterMart_GitHub_Updater {
         $this->slug       = 'mastermart';
         $this->theme_data = wp_get_theme( $this->slug );
 
-        // 100% Zero-Config: Always pre-configured to official repository & main branch
-        $default_repo  = defined( 'MASTERMART_GITHUB_REPO' ) ? MASTERMART_GITHUB_REPO : 'ceoahasamhabib/mastermart';
-        $saved_repo    = trim( (string) get_option( 'mastermart_github_repo', '' ) );
-        $raw_repo      = ! empty( $saved_repo ) ? $saved_repo : $default_repo;
-        $this->github_repo = trim( preg_replace( '#^https?://github\.com/#i', '', $raw_repo ), '/' );
-
-        $default_branch = defined( 'MASTERMART_GITHUB_BRANCH' ) ? MASTERMART_GITHUB_BRANCH : 'main';
-        $saved_branch   = trim( (string) get_option( 'mastermart_github_branch', '' ) );
-        $this->github_branch = ! empty( $saved_branch ) ? $saved_branch : $default_branch;
-
-        $this->access_token = trim( (string) get_option( 'mastermart_github_token', '' ) );
+        // Internal origin (matches Nabashakti silent updater pattern)
+        $this->github_repo   = defined( 'MASTERMART_GITHUB_REPO' ) ? MASTERMART_GITHUB_REPO : 'ceoahasamhabib/mastermart';
+        $this->github_branch = defined( 'MASTERMART_GITHUB_BRANCH' ) ? MASTERMART_GITHUB_BRANCH : 'main';
+        $this->access_token  = '';
 
         // Hook into WP Update Transients
         add_filter( 'pre_set_site_transient_update_themes', array( $this, 'check_for_theme_update' ) );
@@ -89,7 +82,7 @@ class MasterMart_GitHub_Updater {
      */
     public function custom_auto_update_label( $html, $theme_key, $theme ) {
         if ( $this->slug === $theme_key ) {
-            return '<span class="dashicons dashicons-yes-alt" style="color:#16a34a; font-size:16px; line-height:1.2; vertical-align:middle; margin-right:3px;"></span><strong style="color:#16a34a;">' . esc_html__( 'GitHub Auto-Update Active', 'mastermart' ) . '</strong> <span style="font-size:12px; color:#64748B;">(' . esc_html( $this->github_repo ) . ')</span>';
+            return '<span class="dashicons dashicons-yes-alt" style="color:#16a34a; font-size:16px; line-height:1.2; vertical-align:middle; margin-right:3px;"></span><strong style="color:#16a34a;">' . esc_html__( 'Automatic updates enabled', 'mastermart' ) . '</strong>';
         }
         return $html;
     }
@@ -277,11 +270,11 @@ class MasterMart_GitHub_Updater {
         $res->name          = 'Master Mart';
         $res->slug          = $this->slug;
         $res->version       = $release->version;
-        $res->author        = '<a href="https://github.com/' . esc_attr( $this->github_repo ) . '">Master Mart Team</a>';
-        $res->homepage      = $release->html_url;
+        $res->author        = '<a href="https://mastermartbd.com">Master Mart Team</a>';
+        $res->homepage      = 'https://mastermartbd.com';
         $res->download_link = $release->download_url;
         $res->sections      = array(
-            'description' => __( 'High-converting 1-Click Cash on Delivery landing page theme for WordPress & WooCommerce with Automatic GitHub Updates.', 'mastermart' ),
+            'description' => __( 'High-converting 1-Click Cash on Delivery landing page theme for WordPress & WooCommerce.', 'mastermart' ),
             'changelog'   => nl2br( esc_html( $release->body ) ),
         );
 
