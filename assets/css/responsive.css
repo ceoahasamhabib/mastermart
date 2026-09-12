@@ -207,13 +207,27 @@
     }
 
     .mm-summary-box {
-        padding: 16px;
+        padding: 18px 14px;
+    }
+
+    .mm-qty-wrap {
+        padding: 10px 12px;
+    }
+
+    .mm-trust-pills {
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 6px;
+    }
+
+    .mm-trust-pill {
+        font-size: 11px;
+        padding: 6px 2px;
     }
 
     .mm-submit-btn {
-        min-height: 54px;
-        font-size: 17px;
-        padding: 15px;
+        min-height: 54px !important;
+        font-size: 16.5px !important;
+        padding: 14px 16px !important;
     }
 
     .mm-toast {

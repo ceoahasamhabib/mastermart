@@ -322,19 +322,25 @@ $default_prod_id = function_exists( 'mastermart_get_default_product_id' ) ? mast
                             <div class="form-row form-row-wide mm-form-group" id="delivery_zone_field">
                                 <label>ডেলিভারি এরিয়া নির্বাচন করুন <abbr class="required" title="required">*</abbr></label>
                                 <div class="mm-zone-selector">
-                                    <label class="mm-zone-option">
-                                        <input type="radio" name="delivery_zone" value="inside" id="mm-zone-in">
-                                        <div class="mm-zone-label">
-                                            <span class="mm-zone-name">ঢাকার ভেতরে</span>
-                                            <span class="mm-zone-cost">৳<?php echo esc_html( $shipping_inside ); ?></span>
+                                    <label class="mm-zone-option" for="mm-zone-in">
+                                        <div class="mm-zone-left">
+                                            <input type="radio" name="delivery_zone" value="inside" id="mm-zone-in">
+                                            <div class="mm-zone-text">
+                                                <span class="mm-zone-name">ঢাকার ভেতরে</span>
+                                                <span class="mm-zone-time">২৪-৪৮ ঘণ্টার মধ্যে হোম ডেলিভারি</span>
+                                            </div>
                                         </div>
+                                        <span class="mm-zone-badge">৳<?php echo esc_html( $shipping_inside ); ?></span>
                                     </label>
-                                    <label class="mm-zone-option active">
-                                        <input type="radio" name="delivery_zone" value="outside" id="mm-zone-out" checked>
-                                        <div class="mm-zone-label">
-                                            <span class="mm-zone-name">ঢাকার বাইরে / সারা দেশ</span>
-                                            <span class="mm-zone-cost">৳<?php echo esc_html( $shipping_outside ); ?></span>
+                                    <label class="mm-zone-option active" for="mm-zone-out">
+                                        <div class="mm-zone-left">
+                                            <input type="radio" name="delivery_zone" value="outside" id="mm-zone-out" checked>
+                                            <div class="mm-zone-text">
+                                                <span class="mm-zone-name">ঢাকার বাইরে / সারা দেশ</span>
+                                                <span class="mm-zone-time">২-৩ দিনের মধ্যে হোম ডেলিভারি</span>
+                                            </div>
                                         </div>
+                                        <span class="mm-zone-badge">৳<?php echo esc_html( $shipping_outside ); ?></span>
                                     </label>
                                 </div>
                             </div>
@@ -368,59 +374,74 @@ $default_prod_id = function_exists( 'mastermart_get_default_product_id' ) ? mast
                                     <input type="text" class="input-text" id="order_comments" name="order_comments" placeholder="যেমন: ডেলিভারির পূর্বে কল দিবেন">
                                 </span>
                             </p>
-
-                            <!-- WooCommerce Order Attribution Fields -->
-                            <?php
-                            if ( function_exists( 'wc_get_template' ) ) {
-                                wc_get_template( 'checkout/order-attribution.php' );
-                            }
-                            ?>
                         </div>
                     </div>
 
                     <!-- Right Column: Order Summary & Place Order Button -->
                     <div class="mm-form-right">
                         <div id="order_review" class="woocommerce-checkout-review-order mm-summary-box">
-                            <h3>অর্ডার সামারি</h3>
+                            <div class="mm-summary-title-wrap">
+                                <h3>অর্ডার সামারি</h3>
+                                <span class="mm-summary-badge">ক্যাশ অন ডেলিভারি</span>
+                            </div>
 
                             <div class="mm-summary-product">
                                 <img src="<?php echo esc_url( $img_dir . '/hero-pedal-bike.webp' ); ?>" alt="Pedal Bike">
                                 <div class="mm-summary-product-info">
                                     <h4>Pedal Exercise Bike with LCD Display</h4>
-                                    <span class="mm-summary-product-price">৳<?php echo esc_html( number_format( $product_price, 0 ) ); ?> × ১</span>
+                                    <span class="mm-summary-product-price" id="mm-summary-qty-price">৳<?php echo esc_html( number_format( $product_price, 0 ) ); ?> × ১</span>
                                 </div>
                             </div>
 
-                            <table class="shop_table woocommerce-checkout-review-order-table" style="width:100%; margin-bottom: 16px; border-collapse: collapse;">
+                            <!-- Interactive Quantity Controller -->
+                            <div class="mm-qty-wrap">
+                                <span class="mm-qty-title">পরিমাণ (Quantity):</span>
+                                <div class="mm-qty-selector">
+                                    <button type="button" class="mm-qty-btn mm-qty-minus" onclick="mastermartChangeQty(-1)" aria-label="Decrease quantity">−</button>
+                                    <span class="mm-qty-val" id="mm-current-qty">1</span>
+                                    <button type="button" class="mm-qty-btn mm-qty-plus" onclick="mastermartChangeQty(1)" aria-label="Increase quantity">+</button>
+                                </div>
+                                <input type="hidden" id="mm-order-qty" name="order_quantity" value="1">
+                            </div>
+
+                            <table class="shop_table woocommerce-checkout-review-order-table">
                                 <tbody>
                                     <tr class="cart-subtotal mm-sum-row">
-                                        <th style="text-align:left; font-weight: normal;">প্রোডাক্ট মূল্য</th>
-                                        <td style="text-align:right;"><strong>৳<?php echo esc_html( number_format( $product_price, 0 ) ); ?></strong></td>
+                                        <th>প্রোডাক্ট মূল্য</th>
+                                        <td><strong id="mm-line-subtotal">৳<?php echo esc_html( number_format( $product_price, 0 ) ); ?></strong></td>
                                     </tr>
                                     <tr class="woocommerce-shipping-totals shipping mm-sum-row">
-                                        <th style="text-align:left; font-weight: normal;">ডেলিভারি চার্জ</th>
-                                        <td style="text-align:right;"><strong id="mm-line-shipping">৳<?php echo esc_html( $shipping_outside ); ?></strong></td>
+                                        <th>ডেলিভারি চার্জ</th>
+                                        <td><strong id="mm-line-shipping">৳<?php echo esc_html( $shipping_outside ); ?></strong></td>
                                     </tr>
                                 </tbody>
                                 <tfoot>
                                     <tr class="order-total mm-sum-row total">
-                                        <th style="text-align:left;">সর্বমোট বিল</th>
-                                        <td style="text-align:right;"><span class="total-amount" id="mm-line-total">৳<?php echo esc_html( number_format( $default_total, 0 ) ); ?></span></td>
+                                        <th>সর্বমোট বিল</th>
+                                        <td><span class="total-amount" id="mm-line-total">৳<?php echo esc_html( number_format( $default_total, 0 ) ); ?></span></td>
                                     </tr>
                                 </tfoot>
                             </table>
 
                             <div id="payment" class="woocommerce-checkout-payment">
                                 <button type="submit" class="button alt wp-element-button mm-submit-btn" name="woocommerce_checkout_place_order" id="mm-place-order-btn">
-                                    <?php echo mastermart_svg( 'check', array( 'size' => 20 ) ); ?>
-                                    <span>👉 অর্ডার কনফার্ম করুন (ক্যাশ অন ডেলিভারি)</span>
+                                    <span class="mm-btn-icon"><?php echo mastermart_svg( 'check', array( 'size' => 22 ) ); ?></span>
+                                    <span class="mm-btn-text">অর্ডার কনফার্ম করুন (ক্যাশ অন ডেলিভারি)</span>
                                 </button>
                             </div>
 
-                            <p class="mm-security-note">
-                                <?php echo mastermart_svg( 'shield', array( 'size' => 14 ) ); ?>
-                                <span>পণ্য হাতে পেয়ে চেক করে সম্পূর্ণ ক্যাশ অন ডেলিভারিতে টাকা পরিশোধ করুন।</span>
-                            </p>
+                            <!-- Trust Badges Strip -->
+                            <div class="mm-trust-pills">
+                                <div class="mm-trust-pill">
+                                    <span>🛡️ ১০০% আসল পণ্য</span>
+                                </div>
+                                <div class="mm-trust-pill">
+                                    <span>📦 চেক করে পেমেন্ট</span>
+                                </div>
+                                <div class="mm-trust-pill">
+                                    <span>⚡ দ্রুততম ডেলিভারি</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

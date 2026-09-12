@@ -13,20 +13,29 @@ document.addEventListener('DOMContentLoaded', function () {
     const shipInside = typeof mastermart_ajax !== 'undefined' ? parseFloat(mastermart_ajax.shipping_inside) : 80;
     const shipOutside = typeof mastermart_ajax !== 'undefined' ? parseFloat(mastermart_ajax.shipping_outside) : 150;
 
+    let orderQty = 1;
+
     function updateTotals() {
         const selectedZone = document.querySelector('input[name="delivery_zone"]:checked');
         const zoneVal = selectedZone ? selectedZone.value : 'outside';
+        const qtyValEl = document.getElementById('mm-current-qty');
+        const currentQty = qtyValEl ? parseInt(qtyValEl.textContent, 10) || 1 : 1;
+        const productSubtotal = basePrice * currentQty;
         const shippingFee = (zoneVal === 'inside') ? shipInside : shipOutside;
-        const total = basePrice + shippingFee;
+        const total = productSubtotal + shippingFee;
 
         // Update Summary DOM
+        const lineSubtotal = document.getElementById('mm-line-subtotal');
         const lineShipping = document.getElementById('mm-line-shipping');
         const lineTotal = document.getElementById('mm-line-total');
         const mobPrice = document.getElementById('mm-mob-price');
+        const summaryQtyPrice = document.getElementById('mm-summary-qty-price');
 
+        if (lineSubtotal) lineSubtotal.textContent = '৳' + productSubtotal.toLocaleString();
         if (lineShipping) lineShipping.textContent = '৳' + shippingFee;
-        if (lineTotal) lineTotal.textContent = '৳' + total;
-        if (mobPrice) mobPrice.textContent = '৳' + total;
+        if (lineTotal) lineTotal.textContent = '৳' + total.toLocaleString();
+        if (mobPrice) mobPrice.textContent = '৳' + total.toLocaleString();
+        if (summaryQtyPrice) summaryQtyPrice.textContent = '৳' + basePrice.toLocaleString() + ' × ' + currentQty;
 
         // Update active class on zone options
         document.querySelectorAll('.mm-zone-option').forEach(opt => opt.classList.remove('active'));
@@ -35,6 +44,20 @@ document.addEventListener('DOMContentLoaded', function () {
             if (parentLabel) parentLabel.classList.add('active');
         }
     }
+
+    window.mastermartChangeQty = function (delta) {
+        const qtyValEl = document.getElementById('mm-current-qty');
+        const hiddenQty = document.getElementById('mm-order-qty');
+        let current = qtyValEl ? parseInt(qtyValEl.textContent, 10) || 1 : 1;
+        current += delta;
+        if (current < 1) current = 1;
+        if (current > 10) current = 10;
+
+        if (qtyValEl) qtyValEl.textContent = current;
+        if (hiddenQty) hiddenQty.value = current;
+
+        updateTotals();
+    };
 
     const zoneRadios = document.querySelectorAll('input[name="delivery_zone"]');
     zoneRadios.forEach(radio => {
@@ -169,11 +192,13 @@ document.addEventListener('DOMContentLoaded', function () {
             const originalBtnHtml = submitBtn.innerHTML;
             submitBtn.innerHTML = '<span>⏳ ' + (mastermart_ajax.strings.processing || 'অর্ডার প্রসেস হচ্ছে...') + '</span>';
 
-            const formData = new FormData();
+            const qtyEl = document.getElementById('mm-order-qty');
+            const quantity = qtyEl ? parseInt(qtyEl.value, 10) || 1 : 1;
+
             formData.append('action', 'mastermart_express_order');
             formData.append('nonce', mastermart_ajax.nonce);
             formData.append('product_id', productId);
-            formData.append('quantity', 1);
+            formData.append('quantity', quantity);
             formData.append('customer_name', name);
             formData.append('customer_phone', phone);
             formData.append('customer_address', address);
