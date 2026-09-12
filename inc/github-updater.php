@@ -56,7 +56,7 @@ class MasterMart_GitHub_Updater {
         add_filter( 'themes_api', array( $this, 'theme_popup_information' ), 10, 3 );
 
         // Fix folder name after update extraction (mastermart-main -> mastermart)
-        add_filter( 'upgrader_source_selection', array( $this, 'fix_directory_name' ), 10, 4 );
+        add_filter( 'upgrader_source_selection', array( $this, 'fix_directory_name' ), 5, 4 );
 
         // Clear transient cache on updates screens so updates appear immediately
         add_action( 'load-update-core.php', array( $this, 'clear_transient_cache' ) );
@@ -247,10 +247,12 @@ class MasterMart_GitHub_Updater {
 
         if ( version_compare( $release->version, $current_version, '>' ) ) {
             $update_data = array(
-                'theme'       => $this->slug,
-                'new_version' => $release->version,
-                'url'         => $release->html_url,
-                'package'     => $release->download_url,
+                'theme'        => $this->slug,
+                'new_version'  => $release->version,
+                'url'          => $release->html_url,
+                'package'      => $release->download_url,
+                'requires'     => '6.0',
+                'requires_php' => '7.4',
             );
 
             $transient->response[ $this->slug ] = $update_data;
@@ -292,20 +294,52 @@ class MasterMart_GitHub_Updater {
 
     /**
      * Fix directory name after GitHub zip extraction
-     * GitHub zips extract to 'repo-name-commit' or 'repo-name-tag' or 'repo-name-branch'.
-     * We need it to always be 'mastermart' so it updates in-place.
+     * GitHub zips extract to 'repo-name-commit' or 'repo-name-tag' or 'repo-name-branch' (e.g. mastermart-main).
+     * We need it to always be 'mastermart/' with a trailing slash so Theme_Upgrader::check_package()
+     * can locate style.css, and so the theme updates in-place.
      */
     public function fix_directory_name( $source, $remote_source, $upgrader, $hook_extra = array() ) {
         global $wp_filesystem;
 
-        if ( ! isset( $hook_extra['theme'] ) || $hook_extra['theme'] !== $this->slug ) {
+        $is_our_theme = false;
+        if ( isset( $hook_extra['theme'] ) ) {
+            if ( $hook_extra['theme'] === $this->slug ) {
+                $is_our_theme = true;
+            } else {
+                return $source;
+            }
+        } elseif ( isset( $hook_extra['plugin'] ) ) {
+            return $source;
+        } elseif ( is_string( $source ) && false !== stripos( basename( untrailingslashit( $source ) ), $this->slug ) ) {
+            $is_our_theme = true;
+        }
+
+        if ( ! $is_our_theme ) {
             return $source;
         }
 
-        $correct_dir = trailingslashit( $remote_source ) . $this->slug;
+        if ( empty( $wp_filesystem ) ) {
+            require_once ABSPATH . 'wp-admin/includes/file.php';
+            WP_Filesystem();
+        }
+
+        // Must end with a trailing slash for Theme_Upgrader::check_package()
+        $correct_dir = trailingslashit( $remote_source ) . $this->slug . '/';
 
         if ( $source !== $correct_dir ) {
-            $wp_filesystem->move( $source, $correct_dir, true );
+            $source_clean = untrailingslashit( $source );
+            $dest_clean   = untrailingslashit( $correct_dir );
+
+            if ( $wp_filesystem->exists( $dest_clean ) ) {
+                $wp_filesystem->delete( $dest_clean, true );
+            }
+
+            $moved = $wp_filesystem->move( $source_clean, $dest_clean, true );
+            if ( ! $moved ) {
+                copy_dir( $source_clean, $dest_clean );
+                $wp_filesystem->delete( $source_clean, true );
+            }
+
             return $correct_dir;
         }
 
