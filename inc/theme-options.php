@@ -143,7 +143,7 @@ function mastermart_render_settings_page() {
                     <tr>
                         <th scope="row"><label for="mastermart_shipping_outside">Outside Dhaka / Nationwide (৳)</label></th>
                         <td>
-                            <input type="number" id="mastermart_shipping_outside" name="mastermart_shipping_outside" value="<?php echo esc_attr( get_option( 'mastermart_shipping_outside', 150 ) ); ?>" class="regular-text">
+                            <input type="number" id="mastermart_shipping_outside" name="mastermart_shipping_outside" value="<?php echo esc_attr( get_option( 'mastermart_shipping_outside', 120 ) ); ?>" class="regular-text">
                         </td>
                     </tr>
                 </table>

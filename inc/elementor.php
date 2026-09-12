@@ -97,7 +97,7 @@ function mastermart_shortcode_checkout( $atts ) {
     $img_dir          = MASTERMART_URI . '/assets/images';
     $product_image    = ! empty( $landing_prod['image_url'] ) ? $landing_prod['image_url'] : ( $img_dir . '/hero-pedal-bike.webp' );
     $shipping_inside  = (float) get_option( 'mastermart_shipping_inside', 80 );
-    $shipping_outside = (float) get_option( 'mastermart_shipping_outside', 150 );
+    $shipping_outside = (float) get_option( 'mastermart_shipping_outside', 120 );
     $default_total    = $product_price + $shipping_outside;
 
     ob_start();

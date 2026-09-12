@@ -36,7 +36,7 @@ $product_price   = ! empty( $landing_prod['price'] ) ? (float) $landing_prod['pr
 $regular_price   = ! empty( $landing_prod['regular_price'] ) ? (float) $landing_prod['regular_price'] : (float) get_option( 'mastermart_product_regular_price', 2500 );
 $product_image   = ! empty( $landing_prod['image_url'] ) ? $landing_prod['image_url'] : ( $img_dir . '/hero-pedal-bike.webp' );
 $shipping_inside = (float) get_option( 'mastermart_shipping_inside', 80 );
-$shipping_outside= (float) get_option( 'mastermart_shipping_outside', 150 );
+$shipping_outside= (float) get_option( 'mastermart_shipping_outside', 120 );
 $default_total   = $product_price + $shipping_outside;
 ?>
 

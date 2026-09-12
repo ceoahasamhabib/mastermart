@@ -58,7 +58,7 @@ function mastermart_scripts() {
     // Localize Script for AJAX & Pricing
     $product_price    = (float) get_option( 'mastermart_product_price', 2000 );
     $shipping_inside  = (float) get_option( 'mastermart_shipping_inside', 80 );
-    $shipping_outside = (float) get_option( 'mastermart_shipping_outside', 150 );
+    $shipping_outside = (float) get_option( 'mastermart_shipping_outside', 120 );
 
     wp_localize_script( 'mastermart-express', 'mastermart_ajax', array(
         'ajax_url'         => admin_url( 'admin-ajax.php' ),

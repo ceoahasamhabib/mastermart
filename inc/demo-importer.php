@@ -406,7 +406,7 @@ function mastermart_execute_demo_import() {
     update_option( 'mastermart_hotline_phone', $demo_phone );
     update_option( 'mastermart_whatsapp_number', $demo_phone );
     update_option( 'mastermart_shipping_inside', 80 );
-    update_option( 'mastermart_shipping_outside', 150 );
+    update_option( 'mastermart_shipping_outside', 120 );
     update_option( 'mastermart_product_price', 2000 );
     update_option( 'mastermart_product_regular_price', 2500 );
     update_option( 'mastermart_announcement_text', '🔥 সীমিত সময়ের স্পেশাল অফার! স্টক শেষ হওয়ার আগেই অর্ডার কনফার্ম করুন।' );

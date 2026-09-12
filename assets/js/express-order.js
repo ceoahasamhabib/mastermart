@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // --------------------------------------------------------------------------
     const basePrice = typeof mastermart_ajax !== 'undefined' ? parseFloat(mastermart_ajax.product_price) : 2000;
     const shipInside = typeof mastermart_ajax !== 'undefined' ? parseFloat(mastermart_ajax.shipping_inside) : 80;
-    const shipOutside = typeof mastermart_ajax !== 'undefined' ? parseFloat(mastermart_ajax.shipping_outside) : 150;
+    const shipOutside = typeof mastermart_ajax !== 'undefined' ? parseFloat(mastermart_ajax.shipping_outside) : 120;
 
     let orderQty = 1;
 

@@ -95,7 +95,7 @@ function mastermart_ajax_express_order() {
 
     // Delivery Fee calculation
     $shipping_inside  = (float) get_option( 'mastermart_shipping_inside', 80 );
-    $shipping_outside = (float) get_option( 'mastermart_shipping_outside', 150 );
+    $shipping_outside = (float) get_option( 'mastermart_shipping_outside', 120 );
     $shipping_cost    = ( 'inside' === $delivery_zone ) ? $shipping_inside : $shipping_outside;
 
     // Parse Customer Name
