@@ -93,6 +93,13 @@
         padding-bottom: 78px; /* Clearance for sticky bottom bar */
     }
 
+    /* Prevent all child elements from overflowing viewport */
+    .mm-container {
+        padding: 0 12px;
+        max-width: 100%;
+        overflow-x: hidden;
+    }
+
     /* Prevent iOS Safari auto-zoom on input focus */
     input[type="text"],
     input[type="tel"],
@@ -101,6 +108,36 @@
     select,
     textarea {
         font-size: 16px !important;
+        box-sizing: border-box;
+    }
+
+    /* Header: shrink hotline button on small screens */
+    .mm-header-hotline {
+        padding: 7px 12px !important;
+        font-size: 13px !important;
+        gap: 5px !important;
+    }
+
+    .mm-header-hotline svg {
+        width: 15px !important;
+        height: 15px !important;
+        flex-shrink: 0;
+    }
+
+    .mm-logo-img {
+        height: 40px;
+    }
+
+    /* Urgency bar: prevent long text overflow */
+    .mm-urgency-inner {
+        flex-wrap: wrap;
+        gap: 6px;
+        text-align: center;
+    }
+
+    .mm-urgency-text {
+        font-size: 12px;
+        line-height: 1.4;
     }
 
     .mm-hero {
@@ -141,6 +178,18 @@
     .mm-hero-price-wrap {
         margin: 0 auto 20px;
         justify-content: center;
+        width: 100%;
+        box-sizing: border-box;
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    .mm-hero-price-current {
+        font-size: 26px;
+    }
+
+    .mm-hero-price-old {
+        font-size: 16px;
     }
 
     .mm-btn-cta {
@@ -148,6 +197,7 @@
         padding: 16px 20px;
         font-size: 17px;
         min-height: 52px;
+        box-sizing: border-box;
     }
 
     .mm-hero-media {
@@ -155,36 +205,60 @@
     }
 
     .mm-hero-img-wrap {
-        max-width: 320px;
+        max-width: 100%;
         margin: 0 auto;
+    }
+
+    .mm-hero-img-card {
+        max-width: 100%;
+        overflow: hidden;
     }
 
     .mm-checkout-card {
         border-radius: 14px;
-        margin: 0 4px;
+        margin: 0;
+        max-width: 100%;
+        overflow-x: hidden;
     }
 
     .mm-checkout-header {
-        padding: 20px 16px;
+        padding: 20px 14px;
     }
 
     .mm-form-grid {
         grid-template-columns: 1fr;
-        padding: 20px 14px;
+        padding: 16px 12px;
         gap: 22px;
     }
 
     .mm-form-left,
     .mm-form-right {
         width: 100%;
+        max-width: 100%;
+        overflow: hidden;
     }
 
     /* 2-Column Form Row (Name & Phone side-by-side like modern mobile app) */
     .mm-form-row-2col {
         display: grid;
         grid-template-columns: 1fr 1fr;
-        gap: 10px;
+        gap: 8px;
         margin-bottom: 14px;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .mm-form-row-2col .mm-form-group,
+    .mm-form-row-2col p.form-row {
+        min-width: 0; /* prevent grid blowout */
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .mm-form-row-2col input {
+        width: 100% !important;
+        min-width: 0;
+        box-sizing: border-box !important;
     }
 
     /* 2-Column Delivery Zone Selector (side-by-side app selector cards) */
@@ -286,12 +360,46 @@
         font-size: 11px !important;
     }
 
+    /* Benefit boxes from PHP (mm-benefit-box) */
+    .mm-benefit-box {
+        padding: 14px 12px !important;
+        box-sizing: border-box;
+    }
+
+    .mm-benefit-box h4 {
+        font-size: 13.5px !important;
+        margin: 6px 0 4px;
+    }
+
+    .mm-benefit-box p {
+        font-size: 12px !important;
+        line-height: 1.5 !important;
+    }
+
     .mm-summary-box {
-        padding: 18px 14px;
+        padding: 16px 12px;
+        box-sizing: border-box;
+        max-width: 100%;
+        overflow-x: hidden;
+    }
+
+    .mm-summary-product {
+        gap: 10px;
+    }
+
+    .mm-summary-product img {
+        width: 52px;
+        height: 52px;
+        flex-shrink: 0;
+    }
+
+    .mm-summary-product-info h4 {
+        font-size: 13px;
     }
 
     .mm-qty-wrap {
         padding: 10px 12px;
+        box-sizing: border-box;
     }
 
     .mm-trust-pills {
@@ -308,15 +416,19 @@
         min-height: 54px !important;
         font-size: 16.5px !important;
         padding: 14px 16px !important;
+        box-sizing: border-box;
     }
 
+    /* Toast: full-width safe zone on mobile */
     .mm-toast {
         bottom: 84px;
         left: 10px;
         right: 10px;
-        max-width: calc(100% - 20px);
+        max-width: calc(100vw - 20px);
+        width: auto;
         font-size: 12.5px;
         padding: 10px 14px;
+        box-sizing: border-box;
     }
 
     .mm-floating-wa {
@@ -324,6 +436,36 @@
         right: 14px;
         width: 48px;
         height: 48px;
+    }
+
+    /* Section headings */
+    .mm-section-title {
+        font-size: clamp(20px, 5.5vw, 26px);
+        word-break: break-word;
+    }
+
+    .mm-section-subtitle {
+        font-size: 14px;
+    }
+
+    /* FAQ */
+    .mm-faq-question {
+        padding: 14px 16px;
+        font-size: 15px;
+        word-break: break-word;
+    }
+
+    .mm-faq-answer {
+        padding: 0 16px 14px;
+        font-size: 14px;
+    }
+
+    /* Mobile bar */
+    .mm-mobile-bar {
+        left: 0;
+        right: 0;
+        width: 100%;
+        box-sizing: border-box;
     }
 }
 
@@ -345,6 +487,7 @@
     .mm-form-row-2col {
         grid-template-columns: 1fr 1fr;
         gap: 8px;
+        width: 100%;
     }
 
     .mm-zone-selector {
@@ -361,22 +504,79 @@
     }
 
     .mm-urgency-bar {
-        font-size: 12.5px;
+        font-size: 12px;
         padding: 7px 8px;
     }
 
     .mm-logo-img {
-        height: 40px;
+        height: 38px;
     }
 
-    .mm-faq-question {
-        padding: 14px 16px;
-        font-size: 15px;
+    .mm-header-hotline {
+        padding: 6px 10px !important;
+        font-size: 12px !important;
     }
 
-    .mm-faq-answer {
-        padding: 0 16px 14px;
-        font-size: 14px;
+    /* Tighten container padding on very small screens */
+    .mm-container {
+        padding: 0 10px;
+    }
+}
+
+/* --------------------------------------------------------------------------
+   5. VERY SMALL MOBILE (max-width: 360px) — e.g. Android entry-level phones
+   -------------------------------------------------------------------------- */
+@media (max-width: 360px) {
+    .mm-container {
+        padding: 0 8px;
+    }
+
+    .mm-header-hotline {
+        padding: 5px 8px !important;
+        font-size: 11.5px !important;
+        gap: 4px !important;
+    }
+
+    .mm-header-hotline svg {
+        display: none; /* hide icon to save space, keep number readable */
+    }
+
+    .mm-hero-price-wrap {
+        padding: 10px 12px;
+        gap: 6px;
+    }
+
+    .mm-hero-price-current {
+        font-size: 22px;
+    }
+
+    .mm-form-grid {
+        padding: 14px 10px;
+        gap: 18px;
+    }
+
+    .mm-form-row-2col {
+        grid-template-columns: 1fr; /* Stack on tiny screens */
+        gap: 12px;
+    }
+
+    .mm-zone-option {
+        padding: 7px 5px !important;
+    }
+
+    .mm-zone-name {
+        font-size: 11px !important;
+    }
+
+    .mm-zone-badge {
+        font-size: 10.5px !important;
+        padding: 2px 5px !important;
+    }
+
+    .mm-toast {
+        left: 6px;
+        right: 6px;
+        max-width: calc(100vw - 12px);
     }
 }
 

@@ -15,7 +15,9 @@
     box-shadow: var(--mm-shadow-lg);
     overflow: hidden;
     max-width: 960px;
+    width: 100%;
     margin: 0 auto;
+    box-sizing: border-box;
 }
 
 /* Header */
@@ -47,6 +49,8 @@
     grid-template-columns: 1.25fr 1fr;
     gap: 30px;
     padding: 32px;
+    box-sizing: border-box;
+    width: 100%;
 }
 
 .mm-form-heading {
@@ -101,6 +105,7 @@
     color: var(--mm-text-dark);
     font-family: inherit;
     transition: all 0.2s ease;
+    box-sizing: border-box;
 }
 
 .mm-form-group input:focus,

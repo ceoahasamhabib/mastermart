@@ -7,6 +7,8 @@
     max-width: 1120px;
     margin: 0 auto;
     padding: 0 16px;
+    box-sizing: border-box;
+    width: 100%;
 }
 
 /* --------------------------------------------------------------------------
@@ -189,7 +191,8 @@
     border: 1.5px solid var(--mm-border);
     border-radius: var(--mm-radius-md);
     padding: 14px 20px;
-    width: fit-content;
+    max-width: 100%;
+    box-sizing: border-box;
 }
 
 .mm-price-label {
