@@ -83,12 +83,64 @@ document.addEventListener('DOMContentLoaded', function () {
     };
 
     // --------------------------------------------------------------------------
-    // 4. AJAX EXPRESS 1-CLICK COD ORDER SUBMISSION
+    // 4. DATALAYER: BEGIN_CHECKOUT & INITIATE_CHECKOUT TRIGGER
+    // --------------------------------------------------------------------------
+    let hasTrackedBeginCheckout = false;
+    function triggerBeginCheckout() {
+        if (hasTrackedBeginCheckout) return;
+        hasTrackedBeginCheckout = true;
+
+        const selectedZone = document.querySelector('input[name="delivery_zone"]:checked');
+        const zoneVal = selectedZone ? selectedZone.value : 'outside';
+        const shippingFee = (zoneVal === 'inside') ? shipInside : shipOutside;
+        const currentTotal = basePrice + shippingFee;
+        const productIdEl = document.getElementById('mm-product-id');
+        const pId = productIdEl ? productIdEl.value : 'pedal-cycle-lcd';
+
+        // GA4 eCommerce DataLayer begin_checkout
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({
+            event: 'begin_checkout',
+            ecommerce: {
+                currency: 'BDT',
+                value: currentTotal,
+                items: [{
+                    item_id: pId,
+                    item_name: 'Pedal Exercise Bike with LCD Display',
+                    price: basePrice,
+                    quantity: 1
+                }]
+            }
+        });
+
+        // Meta Pixel InitiateCheckout
+        if (typeof fbq === 'function') {
+            fbq('track', 'InitiateCheckout', {
+                content_name: 'Pedal Exercise Bike with LCD Display',
+                content_ids: [pId],
+                content_type: 'product',
+                value: currentTotal,
+                currency: 'BDT',
+                num_items: 1
+            });
+        }
+    }
+
+    // Attach interaction listeners to form fields
+    const checkoutInputs = document.querySelectorAll('#mm-checkout-form input, #mm-checkout-form textarea');
+    checkoutInputs.forEach(input => {
+        input.addEventListener('focus', triggerBeginCheckout, { once: true });
+        input.addEventListener('input', triggerBeginCheckout, { once: true });
+    });
+
+    // --------------------------------------------------------------------------
+    // 5. AJAX EXPRESS 1-CLICK COD ORDER SUBMISSION
     // --------------------------------------------------------------------------
     const orderForm = document.getElementById('mm-checkout-form');
     if (orderForm) {
         orderForm.addEventListener('submit', function (e) {
             e.preventDefault();
+            triggerBeginCheckout();
 
             const submitBtn = document.getElementById('mm-place-order-btn');
             const name = document.getElementById('billing_first_name').value.trim();

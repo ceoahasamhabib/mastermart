@@ -24,6 +24,9 @@ require_once MASTERMART_DIR . '/inc/enqueue.php';
 require_once MASTERMART_DIR . '/inc/ajax.php';
 require_once MASTERMART_DIR . '/inc/tracking.php';
 require_once MASTERMART_DIR . '/inc/theme-options.php';
+require_once MASTERMART_DIR . '/inc/license.php';
+require_once MASTERMART_DIR . '/inc/elementor.php';
+require_once MASTERMART_DIR . '/inc/github-updater.php';
 
 // Load WooCommerce integration if WooCommerce is active.
 if ( class_exists( 'WooCommerce' ) ) {

@@ -328,3 +328,86 @@
     justify-content: center;
     gap: 6px;
 }
+
+/* --------------------------------------------------------------------------
+   WooCommerce Standard DOM Support & Fallback Compatibility
+   -------------------------------------------------------------------------- */
+.woocommerce-billing-fields__field-wrapper {
+    display: block;
+    width: 100%;
+}
+
+.woocommerce-billing-fields p.form-row {
+    margin: 0 0 20px 0;
+    padding: 0;
+    width: 100%;
+    clear: both;
+}
+
+.woocommerce-billing-fields p.form-row label {
+    display: block;
+    font-size: 14.5px;
+    font-weight: 700;
+    color: var(--mm-text-dark);
+    margin-bottom: 6px;
+}
+
+.woocommerce-billing-fields p.form-row abbr.required {
+    color: #EF4444;
+    text-decoration: none;
+    font-weight: 900;
+}
+
+.woocommerce-billing-fields .woocommerce-input-wrapper {
+    display: block;
+    width: 100%;
+}
+
+.woocommerce-billing-fields input.input-text,
+.woocommerce-billing-fields textarea.input-text {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 13px 16px;
+    font-size: 15px;
+    border: 1.5px solid var(--mm-border);
+    border-radius: var(--mm-radius-sm);
+    background: #FFFFFF;
+    color: var(--mm-text-dark);
+    font-family: inherit;
+    transition: all 0.2s ease;
+}
+
+.woocommerce-billing-fields input.input-text:focus,
+.woocommerce-billing-fields textarea.input-text:focus {
+    border-color: var(--mm-orange);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(255, 101, 0, 0.15);
+}
+
+.woocommerce-checkout-review-order table.shop_table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 16px;
+}
+
+.woocommerce-checkout-review-order table.shop_table th,
+.woocommerce-checkout-review-order table.shop_table td {
+    padding: 8px 0;
+    border: none;
+    font-size: 14px;
+}
+
+.woocommerce-checkout-review-order table.shop_table tbody tr {
+    display: flex;
+    justify-content: space-between;
+}
+
+.woocommerce-checkout-review-order table.shop_table tfoot tr {
+    display: flex;
+    justify-content: space-between;
+}
+
+.woocommerce-checkout-payment {
+    padding-top: 10px;
+}
+

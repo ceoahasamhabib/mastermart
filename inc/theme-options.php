@@ -41,6 +41,9 @@ function mastermart_register_settings() {
     register_setting( 'mastermart_settings_group', 'mastermart_announcement_text' );
     register_setting( 'mastermart_settings_group', 'mastermart_header_scripts' );
     register_setting( 'mastermart_settings_group', 'mastermart_footer_scripts' );
+    register_setting( 'mastermart_settings_group', 'mastermart_github_repo' );
+    register_setting( 'mastermart_settings_group', 'mastermart_github_branch' );
+    register_setting( 'mastermart_settings_group', 'mastermart_github_token' );
 }
 add_action( 'admin_init', 'mastermart_register_settings' );
 
@@ -132,11 +135,102 @@ function mastermart_render_settings_page() {
                     </tr>
                 </table>
 
-                <p class="submit" style="margin-top: 24px;">
-                    <button type="submit" class="button button-primary" style="background: #FF6500; border-color: #E05A00; padding: 6px 20px; font-weight: 700; font-size: 14px;">Save Settings</button>
+                <h3 style="font-size: 18px; border-bottom: 2px solid #FF6500; padding-bottom: 8px; margin-top: 30px; color: #0B192C;">🐙 GitHub Automatic Theme Updates</h3>
+                <p style="font-size: 14px; color: #64748b; margin-top: 0;">
+                    আপনার GitHub রিপোজিটরিতে কোড পুশ করার পর সরাসরি ওয়ার্ডপ্রেস অ্যাডমিন থেকে ১-ক্লিকে থিম আপডেট করার ব্যবস্থা।
+                </p>
+                <table class="form-table">
+                    <tr>
+                        <th scope="row"><label for="mastermart_github_repo">GitHub Repository</label></th>
+                        <td>
+                            <input type="text" id="mastermart_github_repo" name="mastermart_github_repo" value="<?php echo esc_attr( get_option( 'mastermart_github_repo', '' ) ); ?>" class="regular-text" placeholder="e.g. username/mastermart or full URL">
+                            <p class="description">আপনার GitHub রিপোজিটরির নাম দিন (যেমন: <code>your-username/mastermart</code>)।</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row"><label for="mastermart_github_branch">Repository Branch</label></th>
+                        <td>
+                            <input type="text" id="mastermart_github_branch" name="mastermart_github_branch" value="<?php echo esc_attr( get_option( 'mastermart_github_branch', 'main' ) ); ?>" class="regular-text" placeholder="main">
+                            <p class="description">ডিফল্ট ব্রাঞ্চ (সাধারণত: <code>main</code>)।</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row"><label for="mastermart_github_token">Personal Access Token (Private Repo)</label></th>
+                        <td>
+                            <input type="password" id="mastermart_github_token" name="mastermart_github_token" value="<?php echo esc_attr( get_option( 'mastermart_github_token', '' ) ); ?>" class="regular-text" placeholder="ghp_xxxxxxxxxxxx">
+                            <p class="description">রিপোজিটরি প্রাইভেট হলে GitHub Personal Access Token (classic: repo scope) দিন। পাবলিক হলে খালি রাখুন।</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">আপডেট চেক করুন</th>
+                        <td>
+                            <button type="button" class="button" id="mastermart-check-update-btn" onclick="mastermartCheckGitHubUpdate()" style="display: inline-flex; align-items: center; gap: 6px;">
+                                <span>🔄 Check for GitHub Updates Now</span>
+                            </button>
+                            <span id="mastermart-update-status" style="margin-left: 12px; font-weight: 600; font-size: 13.5px;"></span>
+                        </td>
+                    </tr>
+                </table>
+
+                <h3 style="font-size: 18px; border-bottom: 2px solid #FF6500; padding-bottom: 8px; margin-top: 30px; color: #0B192C;">🛡️ থিম লাইসেন্স স্ট্যাটাস</h3>
+                <div style="background: #F8FAFC; border: 1.5px solid #E2E8F0; border-radius: 10px; padding: 18px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 14px;">
+                    <div>
+                        <strong style="color: #0B192C; font-size: 15px; display: block;">Master Mart Commercial License</strong>
+                        <span style="color: #64748B; font-size: 13px;">
+                            <?php if ( function_exists( 'mastermart_is_licensed' ) && mastermart_is_licensed() ) : ?>
+                                <span style="color: #16a34a; font-weight: 700;">✓ সক্রিয় (ACTIVE) - লাইসেন্স কোড: 105694</span>
+                            <?php else : ?>
+                                <span style="color: #dc2626; font-weight: 700;">✕ নিষ্ক্রিয় (INACTIVE)</span>
+                            <?php endif; ?>
+                        </span>
+                    </div>
+                    <a href="<?php echo esc_url( admin_url( 'themes.php?page=mastermart-license' ) ); ?>" class="button button-secondary" style="font-weight: 600;">
+                        লাইসেন্স ম্যানেজ করুন →
+                    </a>
+                </div>
+
+                <p class="submit" style="margin-top: 28px;">
+                    <button type="submit" class="button button-primary" style="background: #FF6500; border-color: #E05A00; padding: 8px 24px; font-weight: 800; font-size: 15px;">Save Settings</button>
                 </p>
             </form>
         </div>
     </div>
+
+    <script>
+    function mastermartCheckGitHubUpdate() {
+        var btn = document.getElementById('mastermart-check-update-btn');
+        var status = document.getElementById('mastermart-update-status');
+        btn.disabled = true;
+        status.textContent = 'GitHub থেকে চেক করা হচ্ছে...';
+        status.style.color = '#0284c7';
+
+        var formData = new FormData();
+        formData.append('action', 'mastermart_check_github_update');
+        formData.append('nonce', '<?php echo esc_js( wp_create_nonce( 'mastermart_options_nonce' ) ); ?>');
+
+        fetch(ajaxurl, { method: 'POST', body: formData })
+        .then(function(r){ return r.json(); })
+        .then(function(res){
+            btn.disabled = false;
+            if (res.success) {
+                if (res.data.has_update) {
+                    status.style.color = '#16a34a';
+                    status.innerHTML = res.data.message + ' <a href="' + res.data.update_url + '" class="button button-primary" style="margin-left: 8px;">আপডেট করুন</a>';
+                } else {
+                    status.style.color = '#16a34a';
+                    status.textContent = '✓ ' + res.data.message;
+                }
+            } else {
+                status.style.color = '#dc2626';
+                status.textContent = '✕ ' + (res.data.message || 'ত্রুটি হয়েছে');
+            }
+        })
+        .catch(function(){
+            btn.disabled = false;
+            status.style.color = '#dc2626';
+            status.textContent = 'সার্ভারের সাথে সংযোগ স্থাপন সম্ভব হয়নি।';
+        });
+    }
+    </script>
     <?php
 }

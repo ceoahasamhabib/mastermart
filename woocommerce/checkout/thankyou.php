@@ -103,14 +103,37 @@ $logo_url = mastermart_get_logo_url();
                 </div>
             </div>
 
-            <!-- Meta Pixel Purchase Tracking Script -->
+            <!-- GA4 eCommerce DataLayer & Meta Pixel Purchase Tracking -->
             <script>
+            window.dataLayer = window.dataLayer || [];
+            window.dataLayer.push({
+                event: 'purchase',
+                ecommerce: {
+                    transaction_id: '<?php echo esc_js( $order->get_order_number() ); ?>',
+                    value: <?php echo esc_js( (float) $order->get_total() ); ?>,
+                    tax: <?php echo esc_js( (float) $order->get_total_tax() ); ?>,
+                    shipping: <?php echo esc_js( (float) $order->get_shipping_total() ); ?>,
+                    currency: 'BDT',
+                    items: [
+                        <?php foreach ( $order->get_items() as $item ) : ?>
+                        {
+                            item_id: '<?php echo esc_js( $item->get_product_id() ); ?>',
+                            item_name: '<?php echo esc_js( $item->get_name() ); ?>',
+                            price: <?php echo esc_js( (float) $order->get_item_total( $item, false, false ) ); ?>,
+                            quantity: <?php echo esc_js( (int) $item->get_quantity() ); ?>
+                        },
+                        <?php endforeach; ?>
+                    ]
+                }
+            });
+
             if (typeof fbq === 'function') {
                 fbq('track', 'Purchase', {
                     content_name: 'Pedal Exercise Bike with LCD Display',
                     content_type: 'product',
                     value: <?php echo esc_js( (float) $order->get_total() ); ?>,
-                    currency: 'BDT'
+                    currency: 'BDT',
+                    num_items: <?php echo esc_js( (int) $order->get_item_count() ); ?>
                 });
             }
             </script>

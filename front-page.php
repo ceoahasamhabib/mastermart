@@ -8,6 +8,23 @@
 
 defined( 'ABSPATH' ) || exit;
 
+// Check if page is built or being edited with Elementor
+if ( function_exists( 'mastermart_is_elementor_page' ) && mastermart_is_elementor_page() ) {
+    get_header();
+    ?>
+    <main id="primary" class="site-main mastermart-elementor-content">
+        <?php
+        while ( have_posts() ) :
+            the_post();
+            the_content();
+        endwhile;
+        ?>
+    </main>
+    <?php
+    get_footer();
+    return;
+}
+
 get_header();
 
 $img_dir         = MASTERMART_URI . '/assets/images';
@@ -276,84 +293,94 @@ $default_prod_id = function_exists( 'mastermart_get_default_product_id' ) ? mast
                 <input type="hidden" id="mm-product-id" name="product_id" value="<?php echo esc_attr( $default_prod_id ); ?>">
 
                 <div class="mm-form-grid">
-                    <!-- Left Column: Customer Information -->
-                    <div class="mm-form-left">
+                    <!-- Left Column: Customer Information with Standard WooCommerce DOM Classes -->
+                    <div class="mm-form-left woocommerce-billing-fields">
                         <h3 class="mm-form-heading">
                             <span class="num">১</span>
                             <span>আপনার ডেলিভারি তথ্য দিন</span>
                         </h3>
 
-                        <!-- Customer Full Name -->
-                        <div class="mm-form-group">
-                            <label for="billing_first_name">আপনার সম্পূর্ণ নাম <span class="req">*</span></label>
-                            <input type="text" id="billing_first_name" name="billing_first_name" placeholder="যেমন: মোঃ কামরুল ইসলাম" required autocomplete="name">
-                        </div>
+                        <div class="woocommerce-billing-fields__field-wrapper">
+                            <!-- Customer Full Name -->
+                            <p class="form-row form-row-wide mm-form-group validate-required" id="billing_first_name_field">
+                                <label for="billing_first_name">আপনার সম্পূর্ণ নাম <abbr class="required" title="required">*</abbr></label>
+                                <span class="woocommerce-input-wrapper">
+                                    <input type="text" class="input-text" id="billing_first_name" name="billing_first_name" placeholder="যেমন: মোঃ কামরুল ইসলাম" required autocomplete="name">
+                                </span>
+                            </p>
 
-                        <!-- Customer Mobile Number -->
-                        <div class="mm-form-group">
-                            <label for="billing_phone">১১ ডিজিটের মোবাইল নাম্বার <span class="req">*</span></label>
-                            <input type="tel" id="billing_phone" name="billing_phone" placeholder="01XXXXXXXXX" required autocomplete="tel" oninput="mastermartValidatePhone(this)">
-                            <span class="mm-val-msg" id="mm-phone-msg"></span>
-                        </div>
+                            <!-- Customer Mobile Number -->
+                            <p class="form-row form-row-wide mm-form-group validate-required validate-phone" id="billing_phone_field">
+                                <label for="billing_phone">১১ ডিজিটের মোবাইল নাম্বার <abbr class="required" title="required">*</abbr></label>
+                                <span class="woocommerce-input-wrapper">
+                                    <input type="tel" class="input-text" id="billing_phone" name="billing_phone" placeholder="01XXXXXXXXX" required autocomplete="tel" oninput="mastermartValidatePhone(this)">
+                                </span>
+                                <span class="mm-val-msg" id="mm-phone-msg"></span>
+                            </p>
 
-                        <!-- Delivery Zone Selection -->
-                        <div class="mm-form-group">
-                            <label>ডেলিভারি এরিয়া নির্বাচন করুন <span class="req">*</span></label>
-                            <div class="mm-zone-selector">
-                                <label class="mm-zone-option">
-                                    <input type="radio" name="delivery_zone" value="inside" id="mm-zone-in">
-                                    <div class="mm-zone-label">
-                                        <span class="mm-zone-name">ঢাকার ভেতরে</span>
-                                        <span class="mm-zone-cost">৳<?php echo esc_html( $shipping_inside ); ?></span>
-                                    </div>
-                                </label>
-                                <label class="mm-zone-option active">
-                                    <input type="radio" name="delivery_zone" value="outside" id="mm-zone-out" checked>
-                                    <div class="mm-zone-label">
-                                        <span class="mm-zone-name">ঢাকার বাইরে / সারা দেশ</span>
-                                        <span class="mm-zone-cost">৳<?php echo esc_html( $shipping_outside ); ?></span>
-                                    </div>
-                                </label>
-                            </div>
-                        </div>
-
-                        <!-- Full Delivery Address -->
-                        <div class="mm-form-group">
-                            <label for="billing_address_1">সম্পূর্ণ ঠিকানা (জেলা, থানা ও এলাকা/রোড নং) <span class="req">*</span></label>
-                            
-                            <!-- District Quick Select Chips -->
-                            <div class="mm-chips-wrap">
-                                <span class="mm-chips-label">কুইক সিলেক্ট:</span>
-                                <span class="mm-chip" onclick="mastermartQuickDistrict('ঢাকা')">ঢাকা</span>
-                                <span class="mm-chip" onclick="mastermartQuickDistrict('চট্টগ্রাম')">চট্টগ্রাম</span>
-                                <span class="mm-chip" onclick="mastermartQuickDistrict('সিলেট')">সিলেট</span>
-                                <span class="mm-chip" onclick="mastermartQuickDistrict('রাজশাহী')">রাজশাহী</span>
-                                <span class="mm-chip" onclick="mastermartQuickDistrict('খুলনা')">খুলনা</span>
-                                <span class="mm-chip" onclick="mastermartQuickDistrict('গাজীপুর')">গাজীপুর</span>
-                                <span class="mm-chip" onclick="mastermartQuickDistrict('নারায়ণগঞ্জ')">নারায়ণগঞ্জ</span>
-                                <span class="mm-chip" onclick="mastermartQuickDistrict('কুমিল্লা')">কুমিল্লা</span>
+                            <!-- Delivery Zone Selection -->
+                            <div class="form-row form-row-wide mm-form-group" id="delivery_zone_field">
+                                <label>ডেলিভারি এরিয়া নির্বাচন করুন <abbr class="required" title="required">*</abbr></label>
+                                <div class="mm-zone-selector">
+                                    <label class="mm-zone-option">
+                                        <input type="radio" name="delivery_zone" value="inside" id="mm-zone-in">
+                                        <div class="mm-zone-label">
+                                            <span class="mm-zone-name">ঢাকার ভেতরে</span>
+                                            <span class="mm-zone-cost">৳<?php echo esc_html( $shipping_inside ); ?></span>
+                                        </div>
+                                    </label>
+                                    <label class="mm-zone-option active">
+                                        <input type="radio" name="delivery_zone" value="outside" id="mm-zone-out" checked>
+                                        <div class="mm-zone-label">
+                                            <span class="mm-zone-name">ঢাকার বাইরে / সারা দেশ</span>
+                                            <span class="mm-zone-cost">৳<?php echo esc_html( $shipping_outside ); ?></span>
+                                        </div>
+                                    </label>
+                                </div>
                             </div>
 
-                            <textarea id="billing_address_1" name="billing_address_1" rows="3" placeholder="আপনার জেলা, থানা ও গ্রাম/এলাকার নাম বিস্তারিত লিখুন" required autocomplete="street-address"></textarea>
-                        </div>
+                            <!-- Full Delivery Address -->
+                            <p class="form-row form-row-wide mm-form-group address-field validate-required" id="billing_address_1_field">
+                                <label for="billing_address_1">সম্পূর্ণ ঠিকানা (জেলা, থানা ও এলাকা/রোড নং) <abbr class="required" title="required">*</abbr></label>
+                                
+                                <!-- District Quick Select Chips -->
+                                <span class="mm-chips-wrap">
+                                    <span class="mm-chips-label">কুইক সিলেক্ট:</span>
+                                    <span class="mm-chip" onclick="mastermartQuickDistrict('ঢাকা')">ঢাকা</span>
+                                    <span class="mm-chip" onclick="mastermartQuickDistrict('চট্টগ্রাম')">চট্টগ্রাম</span>
+                                    <span class="mm-chip" onclick="mastermartQuickDistrict('সিলেট')">সিলেট</span>
+                                    <span class="mm-chip" onclick="mastermartQuickDistrict('রাজশাহী')">রাজশাহী</span>
+                                    <span class="mm-chip" onclick="mastermartQuickDistrict('খুলনা')">খুলনা</span>
+                                    <span class="mm-chip" onclick="mastermartQuickDistrict('গাজীপুর')">গাজীপুর</span>
+                                    <span class="mm-chip" onclick="mastermartQuickDistrict('নারায়ণগঞ্জ')">নারায়ণগঞ্জ</span>
+                                    <span class="mm-chip" onclick="mastermartQuickDistrict('কুমিল্লা')">কুমিল্লা</span>
+                                </span>
 
-                        <!-- Special Instructions -->
-                        <div class="mm-form-group">
-                            <label for="order_comments">অতিরিক্ত নির্দেশনা (ঐচ্ছিক)</label>
-                            <input type="text" id="order_comments" name="order_comments" placeholder="যেমন: ডেলিভারির পূর্বে কল দিবেন">
-                        </div>
+                                <span class="woocommerce-input-wrapper">
+                                    <textarea class="input-text" id="billing_address_1" name="billing_address_1" rows="3" placeholder="আপনার জেলা, থানা ও গ্রাম/এলাকার নাম বিস্তারিত লিখুন" required autocomplete="street-address"></textarea>
+                                </span>
+                            </p>
 
-                        <!-- WooCommerce Order Attribution Fields -->
-                        <?php
-                        if ( function_exists( 'wc_get_template' ) ) {
-                            wc_get_template( 'checkout/order-attribution.php' );
-                        }
-                        ?>
+                            <!-- Special Instructions -->
+                            <p class="form-row form-row-wide mm-form-group" id="order_comments_field">
+                                <label for="order_comments">অতিরিক্ত নির্দেশনা (ঐচ্ছিক)</label>
+                                <span class="woocommerce-input-wrapper">
+                                    <input type="text" class="input-text" id="order_comments" name="order_comments" placeholder="যেমন: ডেলিভারির পূর্বে কল দিবেন">
+                                </span>
+                            </p>
+
+                            <!-- WooCommerce Order Attribution Fields -->
+                            <?php
+                            if ( function_exists( 'wc_get_template' ) ) {
+                                wc_get_template( 'checkout/order-attribution.php' );
+                            }
+                            ?>
+                        </div>
                     </div>
 
                     <!-- Right Column: Order Summary & Place Order Button -->
                     <div class="mm-form-right">
-                        <div class="mm-summary-box">
+                        <div id="order_review" class="woocommerce-checkout-review-order mm-summary-box">
                             <h3>অর্ডার সামারি</h3>
 
                             <div class="mm-summary-product">
@@ -364,25 +391,31 @@ $default_prod_id = function_exists( 'mastermart_get_default_product_id' ) ? mast
                                 </div>
                             </div>
 
-                            <div class="mm-sum-row">
-                                <span>প্রোডাক্ট মূল্য</span>
-                                <strong>৳<?php echo esc_html( number_format( $product_price, 0 ) ); ?></strong>
-                            </div>
+                            <table class="shop_table woocommerce-checkout-review-order-table" style="width:100%; margin-bottom: 16px; border-collapse: collapse;">
+                                <tbody>
+                                    <tr class="cart-subtotal mm-sum-row">
+                                        <th style="text-align:left; font-weight: normal;">প্রোডাক্ট মূল্য</th>
+                                        <td style="text-align:right;"><strong>৳<?php echo esc_html( number_format( $product_price, 0 ) ); ?></strong></td>
+                                    </tr>
+                                    <tr class="woocommerce-shipping-totals shipping mm-sum-row">
+                                        <th style="text-align:left; font-weight: normal;">ডেলিভারি চার্জ</th>
+                                        <td style="text-align:right;"><strong id="mm-line-shipping">৳<?php echo esc_html( $shipping_outside ); ?></strong></td>
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+                                    <tr class="order-total mm-sum-row total">
+                                        <th style="text-align:left;">সর্বমোট বিল</th>
+                                        <td style="text-align:right;"><span class="total-amount" id="mm-line-total">৳<?php echo esc_html( number_format( $default_total, 0 ) ); ?></span></td>
+                                    </tr>
+                                </tfoot>
+                            </table>
 
-                            <div class="mm-sum-row">
-                                <span>ডেলিভারি চার্জ</span>
-                                <strong id="mm-line-shipping">৳<?php echo esc_html( $shipping_outside ); ?></strong>
+                            <div id="payment" class="woocommerce-checkout-payment">
+                                <button type="submit" class="button alt wp-element-button mm-submit-btn" name="woocommerce_checkout_place_order" id="mm-place-order-btn">
+                                    <?php echo mastermart_svg( 'check', array( 'size' => 20 ) ); ?>
+                                    <span>👉 অর্ডার কনফার্ম করুন (ক্যাশ অন ডেলিভারি)</span>
+                                </button>
                             </div>
-
-                            <div class="mm-sum-row total">
-                                <span>সর্বমোট বিল</span>
-                                <span class="total-amount" id="mm-line-total">৳<?php echo esc_html( number_format( $default_total, 0 ) ); ?></span>
-                            </div>
-
-                            <button type="submit" class="mm-submit-btn" id="mm-place-order-btn">
-                                <?php echo mastermart_svg( 'check', array( 'size' => 20 ) ); ?>
-                                <span>👉 অর্ডার কনফার্ম করুন (ক্যাশ অন ডেলিভারি)</span>
-                            </button>
 
                             <p class="mm-security-note">
                                 <?php echo mastermart_svg( 'shield', array( 'size' => 14 ) ); ?>
