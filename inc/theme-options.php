@@ -36,6 +36,7 @@ function mastermart_register_settings() {
     register_setting( 'mastermart_settings_group', 'mastermart_shipping_outside' );
     register_setting( 'mastermart_settings_group', 'mastermart_product_price' );
     register_setting( 'mastermart_settings_group', 'mastermart_product_regular_price' );
+    register_setting( 'mastermart_settings_group', 'mastermart_featured_product_id' );
     register_setting( 'mastermart_settings_group', 'mastermart_facebook_pixel_id' );
     register_setting( 'mastermart_settings_group', 'mastermart_gtm_id' );
     register_setting( 'mastermart_settings_group', 'mastermart_announcement_text' );
@@ -85,16 +86,53 @@ function mastermart_render_settings_page() {
                     </tr>
                 </table>
 
-                <h3 style="font-size: 18px; border-bottom: 2px solid #FF6500; padding-bottom: 8px; margin-top: 30px; color: #0B192C;">🚚 Delivery Charges & Pricing</h3>
+                <h3 style="font-size: 18px; border-bottom: 2px solid #FF6500; padding-bottom: 8px; margin-top: 30px; color: #0B192C;">🛒 Landing Page WooCommerce Product</h3>
                 <table class="form-table">
                     <tr>
-                        <th scope="row"><label for="mastermart_product_price">Offer Price (৳)</label></th>
+                        <th scope="row"><label for="mastermart_featured_product_id">Select WooCommerce Product</label></th>
+                        <td>
+                            <?php
+                            $selected_prod = get_option( 'mastermart_featured_product_id', 0 );
+                            if ( class_exists( 'WooCommerce' ) ) {
+                                $products = get_posts( array(
+                                    'post_type'      => 'product',
+                                    'posts_per_page' => 100,
+                                    'post_status'    => 'publish',
+                                    'orderby'        => 'title',
+                                    'order'          => 'ASC',
+                                ) );
+                                ?>
+                                <select id="mastermart_featured_product_id" name="mastermart_featured_product_id" class="regular-text" style="max-width: 400px;">
+                                    <option value="0"><?php esc_html_e( '— Auto Detect / Pedal Exercise Bike —', 'mastermart' ); ?></option>
+                                    <?php foreach ( $products as $p ) : 
+                                        $wc_p = wc_get_product( $p->ID );
+                                        $p_price = $wc_p ? $wc_p->get_price() : '';
+                                        ?>
+                                        <option value="<?php echo esc_attr( $p->ID ); ?>" <?php selected( $selected_prod, $p->ID ); ?>>
+                                            <?php echo esc_html( $p->post_title ); ?> (৳<?php echo esc_html( $p_price ); ?>)
+                                        </option>
+                                    <?php endforeach; ?>
+                                </select>
+                                <p class="description">Choose which WooCommerce product to sell directly on the landing page with 1-click COD checkout. Its price, image, and title will automatically bind to the landing page!</p>
+                                <?php
+                            } else {
+                                echo '<p class="description" style="color:#e11d48;">WooCommerce is not active. The landing page is using fallback defaults.</p>';
+                            }
+                            ?>
+                        </td>
+                    </tr>
+                </table>
+
+                <h3 style="font-size: 18px; border-bottom: 2px solid #FF6500; padding-bottom: 8px; margin-top: 30px; color: #0B192C;">🚚 Delivery Charges & Pricing Fallbacks</h3>
+                <table class="form-table">
+                    <tr>
+                        <th scope="row"><label for="mastermart_product_price">Fallback Offer Price (৳)</label></th>
                         <td>
                             <input type="number" id="mastermart_product_price" name="mastermart_product_price" value="<?php echo esc_attr( get_option( 'mastermart_product_price', 2000 ) ); ?>" class="regular-text">
                         </td>
                     </tr>
                     <tr>
-                        <th scope="row"><label for="mastermart_product_regular_price">Regular Price (৳)</label></th>
+                        <th scope="row"><label for="mastermart_product_regular_price">Fallback Regular Price (৳)</label></th>
                         <td>
                             <input type="number" id="mastermart_product_regular_price" name="mastermart_product_regular_price" value="<?php echo esc_attr( get_option( 'mastermart_product_regular_price', 2500 ) ); ?>" class="regular-text">
                         </td>

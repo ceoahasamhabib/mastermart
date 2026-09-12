@@ -1,0 +1,16 @@
+{
+  "mastermart_hotline_phone": "01400828464",
+  "mastermart_whatsapp_number": "01400828464",
+  "mastermart_shipping_inside": 80,
+  "mastermart_shipping_outside": 150,
+  "mastermart_product_price": 2000,
+  "mastermart_product_regular_price": 2500,
+  "mastermart_announcement_text": "🔥 সীমিত সময়ের স্পেশাল অফার! স্টক শেষ হওয়ার আগেই অর্ডার কনফার্ম করুন।",
+  "mastermart_github_repo": "ceoahasamhabib/mastermart",
+  "mastermart_github_branch": "main",
+  "woocommerce_currency": "BDT",
+  "woocommerce_currency_pos": "left",
+  "woocommerce_price_thousand_sep": ",",
+  "woocommerce_price_decimal_sep": ".",
+  "woocommerce_price_num_decimals": 0
+}

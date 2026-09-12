@@ -90,12 +90,15 @@ function mastermart_shortcode_checkout( $atts ) {
         'subtitle' => 'ডেলিভারির ঠিকানার ঘরগুলো পূরণ করুন এবং “অর্ডার কনফার্ম করুন” বাটনে ক্লিক করুন',
     ), $atts, 'mastermart_checkout' );
 
-    $product_price    = (float) get_option( 'mastermart_product_price', 2000 );
+    $landing_prod     = function_exists( 'mastermart_get_landing_product' ) ? mastermart_get_landing_product() : array();
+    $default_prod_id  = ! empty( $landing_prod['id'] ) ? $landing_prod['id'] : ( function_exists( 'mastermart_get_default_product_id' ) ? mastermart_get_default_product_id() : 0 );
+    $product_name     = ! empty( $landing_prod['name'] ) ? $landing_prod['name'] : 'Pedal Exercise Bike with LCD Display-(Premium Quality)';
+    $product_price    = ! empty( $landing_prod['price'] ) ? (float) $landing_prod['price'] : (float) get_option( 'mastermart_product_price', 2000 );
+    $img_dir          = MASTERMART_URI . '/assets/images';
+    $product_image    = ! empty( $landing_prod['image_url'] ) ? $landing_prod['image_url'] : ( $img_dir . '/hero-pedal-bike.webp' );
     $shipping_inside  = (float) get_option( 'mastermart_shipping_inside', 80 );
     $shipping_outside = (float) get_option( 'mastermart_shipping_outside', 150 );
     $default_total    = $product_price + $shipping_outside;
-    $default_prod_id  = get_option( 'mastermart_primary_product_id', 0 );
-    $img_dir          = MASTERMART_URI . '/assets/images';
 
     ob_start();
     ?>
@@ -204,10 +207,10 @@ function mastermart_shortcode_checkout( $atts ) {
                                 </div>
 
                                 <div class="mm-summary-product">
-                                    <img src="<?php echo esc_url( $img_dir . '/hero-pedal-bike.webp' ); ?>" alt="Pedal Bike">
+                                    <img src="<?php echo esc_url( $product_image ); ?>" alt="<?php echo esc_attr( $product_name ); ?>">
                                     <div class="mm-summary-product-info">
-                                        <h4>Pedal Exercise Bike with LCD Display</h4>
-                                        <span class="mm-summary-product-price" id="mm-summary-qty-price">৳<?php echo esc_html( number_format( $product_price, 0 ) ); ?> × ১</span>
+                                         <h4><?php echo esc_html( $product_name ); ?></h4>
+                                         <span class="mm-summary-product-price" id="mm-summary-qty-price">৳<?php echo esc_html( number_format( $product_price, 0 ) ); ?> × ১</span>
                                     </div>
                                 </div>
 

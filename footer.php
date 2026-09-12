@@ -11,7 +11,8 @@ defined( 'ABSPATH' ) || exit;
 $hotline_phone   = mastermart_get_phone();
 $whatsapp_number = mastermart_get_whatsapp();
 $logo_url        = mastermart_get_logo_url();
-$product_price   = (float) get_option( 'mastermart_product_price', 2000 );
+$landing_prod    = function_exists( 'mastermart_get_landing_product' ) ? mastermart_get_landing_product() : array();
+$product_price   = ! empty( $landing_prod['price'] ) ? (float) $landing_prod['price'] : (float) get_option( 'mastermart_product_price', 2000 );
 $shipping_outside= (float) get_option( 'mastermart_shipping_outside', 150 );
 $total_default   = $product_price + $shipping_outside;
 ?>

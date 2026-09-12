@@ -26,15 +26,6 @@ require_once MASTERMART_DIR . '/inc/tracking.php';
 require_once MASTERMART_DIR . '/inc/theme-options.php';
 require_once MASTERMART_DIR . '/inc/license.php';
 require_once MASTERMART_DIR . '/inc/elementor.php';
+require_once MASTERMART_DIR . '/inc/demo-importer.php';
 require_once MASTERMART_DIR . '/inc/github-updater.php';
-
-// Load WooCommerce integration if WooCommerce is active.
-if ( class_exists( 'WooCommerce' ) ) {
-    require_once MASTERMART_DIR . '/inc/woocommerce.php';
-} else {
-    add_action( 'plugins_loaded', function() {
-        if ( class_exists( 'WooCommerce' ) ) {
-            require_once MASTERMART_DIR . '/inc/woocommerce.php';
-        }
-    } );
-}
+require_once MASTERMART_DIR . '/inc/woocommerce.php';
