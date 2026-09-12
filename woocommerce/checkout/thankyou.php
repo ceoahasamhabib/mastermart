@@ -40,7 +40,7 @@ $logo_url = mastermart_get_logo_url();
                     </div>
                     <div>
                         <span style="font-size: 12px; color: #64748B; display: block; font-weight: 600;">তারিখ</span>
-                        <strong style="font-size: 15px; color: #0B192C;"><?php echo esc_html( wc_format_datetime( $order->get_date_created() ) ); ?></strong>
+                        <strong style="font-size: 15px; color: #0B192C;"><?php echo esc_html( function_exists( 'wc_format_datetime' ) ? wc_format_datetime( $order->get_date_created() ) : date_i18n( get_option( 'date_format' ) ) ); ?></strong>
                     </div>
                     <div>
                         <span style="font-size: 12px; color: #64748B; display: block; font-weight: 600;">পেমেন্ট পদ্ধতি</span>

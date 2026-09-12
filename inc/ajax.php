@@ -68,6 +68,13 @@ function mastermart_ajax_express_order() {
         }
     }
 
+    // Verify WooCommerce is active
+    if ( ! class_exists( 'WooCommerce' ) || ! function_exists( 'wc_get_product' ) || ! function_exists( 'wc_create_order' ) ) {
+        wp_send_json_error( array(
+            'message' => esc_html__( 'WooCommerce প্লাগইনটি সক্রিয় করা নেই। অনুগ্রহ করে WordPress ড্যাশবোর্ড থেকে WooCommerce সক্রিয় করুন।', 'mastermart' ),
+        ) );
+    }
+
     // If product_id is not passed or zero, look up or create Master Mart Pedal Cycle product
     if ( ! $product_id && function_exists( 'mastermart_get_default_product_id' ) ) {
         $product_id = mastermart_get_default_product_id();

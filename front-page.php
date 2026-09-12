@@ -292,7 +292,7 @@ $default_total   = $product_price + $shipping_outside;
                 <p>ডেলিভারির ঠিকানার ঘরগুলো পূরণ করুন এবং “অর্ডার কনফার্ম করুন” বাটনে ক্লিক করুন</p>
             </div>
 
-            <form id="mm-checkout-form" name="checkout" class="checkout woocommerce-checkout" method="post" action="<?php echo esc_url( wc_get_checkout_url() ); ?>" novalidate>
+            <form id="mm-checkout-form" name="checkout" class="checkout woocommerce-checkout" method="post" action="<?php echo esc_url( function_exists( 'wc_get_checkout_url' ) ? wc_get_checkout_url() : '#' ); ?>" novalidate>
                 <input type="hidden" id="mm-product-id" name="product_id" value="<?php echo esc_attr( $default_prod_id ); ?>">
 
                 <div class="mm-form-grid">

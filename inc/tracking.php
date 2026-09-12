@@ -96,7 +96,8 @@ add_action( 'wp_body_open', 'mastermart_body_open_tracking', 5 );
  * 3. eCommerce DataLayer: view_item event on Product / Landing Page.
  */
 function mastermart_ecommerce_view_item_datalayer() {
-    if ( is_front_page() || is_page_template( 'templates/template-landing-page.php' ) || is_product() ) {
+    $is_prod = function_exists( 'is_product' ) && is_product();
+    if ( is_front_page() || is_page_template( 'templates/template-landing-page.php' ) || $is_prod ) {
         $price   = (float) get_option( 'mastermart_product_price', 2000 );
         $prod_id = function_exists( 'mastermart_get_default_product_id' ) ? mastermart_get_default_product_id() : 'pedal-cycle-lcd';
         ?>
