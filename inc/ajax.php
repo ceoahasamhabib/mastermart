@@ -18,6 +18,12 @@ add_action( 'wp_ajax_mastermart_express_order', 'mastermart_ajax_express_order' 
 add_action( 'wp_ajax_nopriv_mastermart_express_order', 'mastermart_ajax_express_order' );
 
 function mastermart_ajax_express_order() {
+    // Ultra-Fast Performance: Defer/disable transactional emails during AJAX checkout to eliminate blocking SMTP/DNS socket timeouts
+    add_filter( 'woocommerce_defer_transactional_emails', '__return_true' );
+    add_filter( 'woocommerce_email_enabled_customer_processing_order', '__return_false' );
+    add_filter( 'woocommerce_email_enabled_new_order', '__return_false' );
+    add_filter( 'pre_wp_mail', '__return_true', 999 );
+
     // Nonce verification
     $nonce = isset( $_POST['nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['nonce'] ) ) : '';
     if ( ! wp_verify_nonce( $nonce, 'mastermart_nonce' ) ) {
@@ -186,9 +192,17 @@ function mastermart_ajax_express_order() {
     $order->calculate_totals();
     $order->update_status( 'processing', esc_html__( '1-ক্লিক এক্সপ্রেস ক্যাশ অন ডেলিভারি অর্ডার তৈরি হয়েছে।', 'mastermart' ) );
 
+    // Reduce stock levels
+    wc_reduce_stock_levels( $order->get_id() );
+
     // Allow standard checkout order processed hooks
     do_action( 'woocommerce_checkout_create_order', $order, $_POST );
     do_action( 'woocommerce_checkout_order_processed', $order->get_id(), $_POST, $order );
+
+    // Empty WooCommerce cart if active
+    if ( function_exists( 'WC' ) && WC()->cart ) {
+        WC()->cart->empty_cart();
+    }
 
     // Build Redirect URL
     $received_url = $order->get_checkout_order_received_url();

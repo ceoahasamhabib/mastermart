@@ -11,7 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // Define theme constants.
-define( 'MASTERMART_VERSION', '1.0.0' );
+define( 'MASTERMART_VERSION', '1.0.1' );
 define( 'MASTERMART_DIR', get_template_directory() );
 define( 'MASTERMART_URI', get_template_directory_uri() );
 define( 'MASTERMART_GITHUB_REPO', 'ceoahasamhabib/mastermart' );

@@ -179,31 +179,111 @@
         width: 100%;
     }
 
-    .mm-zone-selector {
-        grid-template-columns: 1fr;
+    /* 2-Column Form Row (Name & Phone side-by-side like modern mobile app) */
+    .mm-form-row-2col {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
         gap: 10px;
+        margin-bottom: 14px;
+    }
+
+    /* 2-Column Delivery Zone Selector (side-by-side app selector cards) */
+    .mm-zone-selector {
+        display: grid !important;
+        grid-template-columns: 1fr 1fr !important;
+        gap: 8px !important;
+        margin-bottom: 16px;
     }
 
     .mm-zone-option {
-        min-height: 50px;
-        padding: 12px 14px;
+        min-height: auto !important;
+        padding: 10px 8px !important;
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        justify-content: space-between !important;
+        gap: 6px !important;
+        border-radius: 10px !important;
     }
 
-    .mm-chips-wrap {
-        gap: 8px;
-    }
-
-    .mm-chip {
-        padding: 6px 13px;
-        font-size: 13px;
-        min-height: 34px;
-        display: inline-flex;
+    .mm-zone-left {
+        display: flex;
         align-items: center;
+        gap: 6px;
+        width: 100%;
     }
 
+    .mm-zone-option input[type="radio"] {
+        width: 16px;
+        height: 16px;
+        margin: 0;
+    }
+
+    .mm-zone-name {
+        font-size: 13px !important;
+        font-weight: 800 !important;
+        line-height: 1.2;
+    }
+
+    .mm-zone-time {
+        font-size: 10px !important;
+        line-height: 1.2;
+        display: block;
+    }
+
+    .mm-zone-badge {
+        align-self: flex-end;
+        font-size: 11.5px !important;
+        padding: 2px 7px !important;
+    }
+
+    /* 2-Column Mobile App Features Grid */
+    .mm-features-grid {
+        display: grid !important;
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 10px !important;
+    }
+
+    .mm-feature-card {
+        padding: 14px 10px !important;
+        border-radius: 12px !important;
+        text-align: center;
+    }
+
+    .mm-feature-icon {
+        width: 40px !important;
+        height: 40px !important;
+        font-size: 19px !important;
+        margin: 0 auto 8px !important;
+    }
+
+    .mm-feature-card h3 {
+        font-size: 13.5px !important;
+        margin-bottom: 4px !important;
+    }
+
+    .mm-feature-card p {
+        font-size: 11.5px !important;
+        line-height: 1.4 !important;
+    }
+
+    /* 2-Column Mobile App Benefits Grid */
     .mm-benefits-grid {
-        grid-template-columns: 1fr;
-        gap: 14px;
+        display: grid !important;
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 10px !important;
+    }
+
+    .mm-benefit-card {
+        padding: 12px 10px !important;
+        border-radius: 10px !important;
+    }
+
+    .mm-benefit-card h4 {
+        font-size: 13px !important;
+    }
+
+    .mm-benefit-card p {
+        font-size: 11px !important;
     }
 
     .mm-summary-box {
@@ -251,9 +331,33 @@
    4. SMALL MOBILE (max-width: 480px)
    -------------------------------------------------------------------------- */
 @media (max-width: 480px) {
+    /* Keep 2-column mobile app layout even on smallest screens */
     .mm-features-grid {
-        grid-template-columns: 1fr;
-        gap: 16px;
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 8px !important;
+    }
+
+    .mm-benefits-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 8px !important;
+    }
+
+    .mm-form-row-2col {
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+    }
+
+    .mm-zone-selector {
+        grid-template-columns: 1fr 1fr !important;
+        gap: 6px !important;
+    }
+
+    .mm-zone-option {
+        padding: 8px 6px !important;
+    }
+
+    .mm-zone-name {
+        font-size: 12px !important;
     }
 
     .mm-urgency-bar {

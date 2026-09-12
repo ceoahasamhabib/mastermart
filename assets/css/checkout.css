@@ -128,39 +128,16 @@
     color: #EF4444;
 }
 
-/* District Chips */
-.mm-chips-wrap {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 6px;
-    margin-bottom: 10px;
+/* 2-Column Responsive Row (Name & Phone) */
+.mm-form-row-2col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 16px;
 }
 
-.mm-chips-label {
-    font-size: 12px;
-    color: var(--mm-text-muted);
-    font-weight: 700;
-    margin-right: 4px;
-}
-
-.mm-chip {
-    background: var(--mm-bg-alt);
-    border: 1px solid var(--mm-border);
-    border-radius: var(--mm-radius-full);
-    padding: 3px 11px;
-    font-size: 12px;
-    font-weight: 600;
-    color: var(--mm-text-body);
-    cursor: pointer;
-    transition: all 0.15s ease;
-    user-select: none;
-}
-
-.mm-chip:hover {
-    background: var(--mm-navy);
-    color: #FFFFFF;
-    border-color: var(--mm-navy);
+.mm-form-row-2col .mm-form-group {
+    margin-bottom: 0 !important;
 }
 
 /* Delivery Zone Selector */

@@ -304,22 +304,25 @@ $default_total   = $product_price + $shipping_outside;
                         </h3>
 
                         <div class="woocommerce-billing-fields__field-wrapper">
-                            <!-- Customer Full Name -->
-                            <p class="form-row form-row-wide mm-form-group validate-required" id="billing_first_name_field">
-                                <label for="billing_first_name">আপনার সম্পূর্ণ নাম <abbr class="required" title="required">*</abbr></label>
-                                <span class="woocommerce-input-wrapper">
-                                    <input type="text" class="input-text" id="billing_first_name" name="billing_first_name" placeholder="যেমন: মোঃ কামরুল ইসলাম" required autocomplete="name">
-                                </span>
-                            </p>
+                            <!-- 2-Column Responsive Row: Name & Phone -->
+                            <div class="mm-form-row-2col">
+                                <!-- Customer Full Name -->
+                                <p class="form-row form-row-first mm-form-group validate-required" id="billing_first_name_field">
+                                    <label for="billing_first_name">আপনার সম্পূর্ণ নাম <abbr class="required" title="required">*</abbr></label>
+                                    <span class="woocommerce-input-wrapper">
+                                        <input type="text" class="input-text" id="billing_first_name" name="billing_first_name" placeholder="যেমন: মোঃ কামরুল ইসলাম" required autocomplete="name">
+                                    </span>
+                                </p>
 
-                            <!-- Customer Mobile Number -->
-                            <p class="form-row form-row-wide mm-form-group validate-required validate-phone" id="billing_phone_field">
-                                <label for="billing_phone">১১ ডিজিটের মোবাইল নাম্বার <abbr class="required" title="required">*</abbr></label>
-                                <span class="woocommerce-input-wrapper">
-                                    <input type="tel" class="input-text" id="billing_phone" name="billing_phone" placeholder="01XXXXXXXXX" required autocomplete="tel" oninput="mastermartValidatePhone(this)">
-                                </span>
-                                <span class="mm-val-msg" id="mm-phone-msg"></span>
-                            </p>
+                                <!-- Customer Mobile Number -->
+                                <p class="form-row form-row-last mm-form-group validate-required validate-phone" id="billing_phone_field">
+                                    <label for="billing_phone">১১ ডিজিটের মোবাইল নাম্বার <abbr class="required" title="required">*</abbr></label>
+                                    <span class="woocommerce-input-wrapper">
+                                        <input type="tel" class="input-text" id="billing_phone" name="billing_phone" placeholder="01XXXXXXXXX" required autocomplete="tel" oninput="mastermartValidatePhone(this)">
+                                    </span>
+                                    <span class="mm-val-msg" id="mm-phone-msg"></span>
+                                </p>
+                            </div>
 
                             <!-- Delivery Zone Selection -->
                             <div class="form-row form-row-wide mm-form-group" id="delivery_zone_field">
@@ -351,20 +354,6 @@ $default_total   = $product_price + $shipping_outside;
                             <!-- Full Delivery Address -->
                             <p class="form-row form-row-wide mm-form-group address-field validate-required" id="billing_address_1_field">
                                 <label for="billing_address_1">সম্পূর্ণ ঠিকানা (জেলা, থানা ও এলাকা/রোড নং) <abbr class="required" title="required">*</abbr></label>
-                                
-                                <!-- District Quick Select Chips -->
-                                <span class="mm-chips-wrap">
-                                    <span class="mm-chips-label">কুইক সিলেক্ট:</span>
-                                    <span class="mm-chip" onclick="mastermartQuickDistrict('ঢাকা')">ঢাকা</span>
-                                    <span class="mm-chip" onclick="mastermartQuickDistrict('চট্টগ্রাম')">চট্টগ্রাম</span>
-                                    <span class="mm-chip" onclick="mastermartQuickDistrict('সিলেট')">সিলেট</span>
-                                    <span class="mm-chip" onclick="mastermartQuickDistrict('রাজশাহী')">রাজশাহী</span>
-                                    <span class="mm-chip" onclick="mastermartQuickDistrict('খুলনা')">খুলনা</span>
-                                    <span class="mm-chip" onclick="mastermartQuickDistrict('গাজীপুর')">গাজীপুর</span>
-                                    <span class="mm-chip" onclick="mastermartQuickDistrict('নারায়ণগঞ্জ')">নারায়ণগঞ্জ</span>
-                                    <span class="mm-chip" onclick="mastermartQuickDistrict('কুমিল্লা')">কুমিল্লা</span>
-                                </span>
-
                                 <span class="woocommerce-input-wrapper">
                                     <textarea class="input-text" id="billing_address_1" name="billing_address_1" rows="3" placeholder="আপনার জেলা, থানা ও গ্রাম/এলাকার নাম বিস্তারিত লিখুন" required autocomplete="street-address"></textarea>
                                 </span>

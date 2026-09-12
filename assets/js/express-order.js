@@ -66,21 +66,7 @@ document.addEventListener('DOMContentLoaded', function () {
     updateTotals();
 
     // --------------------------------------------------------------------------
-    // 2. DISTRICT QUICK SELECT CHIPS
-    // --------------------------------------------------------------------------
-    window.mastermartQuickDistrict = function (district) {
-        const addrField = document.getElementById('billing_address_1');
-        if (!addrField) return;
-
-        let currentVal = addrField.value.trim();
-        if (!currentVal.includes(district)) {
-            addrField.value = currentVal ? currentVal + ', ' + district : district;
-        }
-        addrField.focus();
-    };
-
-    // --------------------------------------------------------------------------
-    // 3. 11-DIGIT BANGLADESHI PHONE NUMBER VALIDATOR
+    // 2. 11-DIGIT BANGLADESHI PHONE NUMBER VALIDATOR
     // --------------------------------------------------------------------------
     window.mastermartValidatePhone = function (input) {
         const val = input.value.trim().replace(/[^0-9]/g, '');
@@ -195,6 +181,7 @@ document.addEventListener('DOMContentLoaded', function () {
             const qtyEl = document.getElementById('mm-order-qty');
             const quantity = qtyEl ? parseInt(qtyEl.value, 10) || 1 : 1;
 
+            const formData = new FormData(orderForm);
             formData.append('action', 'mastermart_express_order');
             formData.append('nonce', mastermart_ajax.nonce);
             formData.append('product_id', productId);
