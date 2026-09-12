@@ -1,0 +1,167 @@
+/* ==========================================================================
+   Master Mart - Responsive & Mobile-First Overrides
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. MOBILE STICKY BOTTOM BAR
+   -------------------------------------------------------------------------- */
+.mm-mobile-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #FFFFFF;
+    border-top: 1.5px solid var(--mm-border);
+    padding: 10px 16px;
+    display: flex;
+    gap: 12px;
+    z-index: 1000;
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1);
+}
+
+@media (min-width: 769px) {
+    .mm-mobile-bar {
+        display: none;
+    }
+}
+
+.mm-mob-call {
+    background: #FFF7ED;
+    border: 1.5px solid #FFEDD5;
+    color: var(--mm-orange);
+    width: 52px;
+    height: 50px;
+    border-radius: var(--mm-radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    flex-shrink: 0;
+    transition: all 0.2s ease;
+}
+
+.mm-mob-call:hover {
+    background: var(--mm-orange);
+    color: #FFFFFF;
+}
+
+.mm-mob-order {
+    flex: 1;
+    background: linear-gradient(135deg, #FF6500 0%, #E05A00 100%);
+    color: #FFFFFF !important;
+    font-weight: 900;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--mm-radius-sm);
+    text-decoration: none;
+    box-shadow: 0 4px 15px rgba(255, 101, 0, 0.4);
+    transition: all 0.2s ease;
+}
+
+.mm-mob-order:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 18px rgba(255, 101, 0, 0.5);
+}
+
+/* --------------------------------------------------------------------------
+   2. TABLET OVERRIDES (max-width: 1024px)
+   -------------------------------------------------------------------------- */
+@media (max-width: 1024px) {
+    .mm-features-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+
+    .mm-benefits-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* --------------------------------------------------------------------------
+   3. MOBILE OVERRIDES (max-width: 768px)
+   -------------------------------------------------------------------------- */
+@media (max-width: 768px) {
+    body {
+        padding-bottom: 74px; /* Clearance for sticky bottom bar */
+    }
+
+    .mm-hero {
+        padding: 30px 0 40px;
+    }
+
+    .mm-hero-grid {
+        grid-template-columns: 1fr;
+        gap: 30px;
+        text-align: center;
+    }
+
+    .mm-badge {
+        margin: 0 auto 16px;
+    }
+
+    .mm-hero-pills {
+        justify-content: center;
+    }
+
+    .mm-hero-price-wrap {
+        margin: 0 auto 24px;
+    }
+
+    .mm-btn-cta {
+        width: 100%;
+        padding: 16px 20px;
+        font-size: 18px;
+    }
+
+    .mm-form-grid {
+        grid-template-columns: 1fr;
+        padding: 20px 16px;
+        gap: 24px;
+    }
+
+    .mm-zone-selector {
+        grid-template-columns: 1fr;
+    }
+
+    .mm-benefits-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .mm-toast {
+        bottom: 80px;
+        left: 12px;
+        right: 12px;
+        max-width: calc(100% - 24px);
+    }
+
+    .mm-floating-wa {
+        bottom: 74px;
+        right: 16px;
+        width: 50px;
+        height: 50px;
+    }
+}
+
+/* --------------------------------------------------------------------------
+   4. SMALL MOBILE (max-width: 480px)
+   -------------------------------------------------------------------------- */
+@media (max-width: 480px) {
+    .mm-features-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .mm-hero-title {
+        font-size: 24px;
+    }
+
+    .mm-urgency-bar {
+        font-size: 13px;
+        padding: 8px 10px;
+    }
+
+    .mm-logo-img {
+        height: 44px;
+    }
+}

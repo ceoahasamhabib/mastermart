@@ -1,0 +1,644 @@
+/* ==========================================================================
+   Master Mart - Core Design System & Landing Page Styles
+   ========================================================================== */
+
+/* Layout Container */
+.mm-container {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 0 16px;
+}
+
+/* --------------------------------------------------------------------------
+   1. TOP URGENCY ANNOUNCEMENT BAR
+   -------------------------------------------------------------------------- */
+.mm-urgency-bar {
+    background: linear-gradient(90deg, #991B1B 0%, #DC2626 50%, #991B1B 100%);
+    color: #FFFFFF;
+    padding: 10px 16px;
+    font-size: 14px;
+    font-weight: 700;
+    text-align: center;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.mm-urgency-inner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.mm-urgency-text {
+    letter-spacing: 0.2px;
+}
+
+.mm-timer-badge {
+    background: #FFFFFF;
+    color: #991B1B;
+    padding: 3px 12px;
+    border-radius: var(--mm-radius-full);
+    font-weight: 800;
+    font-size: 13.5px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+/* --------------------------------------------------------------------------
+   2. SITE HEADER
+   -------------------------------------------------------------------------- */
+.mm-header {
+    background: #FFFFFF;
+    border-bottom: 1.5px solid var(--mm-border);
+    padding: 14px 0;
+    box-shadow: var(--mm-shadow-sm);
+    position: relative;
+    z-index: 900;
+}
+
+.mm-header-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.mm-brand-link {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+}
+
+.mm-logo-img {
+    height: 52px;
+    width: auto;
+    object-fit: contain;
+    border-radius: 8px;
+}
+
+.mm-header-hotline {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #FFF7ED;
+    color: var(--mm-orange);
+    border: 1.5px solid #FFEDD5;
+    padding: 9px 20px;
+    border-radius: var(--mm-radius-full);
+    font-weight: 800;
+    font-size: 15px;
+    text-decoration: none;
+    transition: all 0.25s ease;
+    box-shadow: 0 2px 8px rgba(255, 101, 0, 0.1);
+}
+
+.mm-header-hotline:hover {
+    background: var(--mm-orange);
+    color: #FFFFFF;
+    border-color: var(--mm-orange);
+    transform: translateY(-2px);
+    box-shadow: var(--mm-shadow-glow);
+}
+
+/* --------------------------------------------------------------------------
+   3. HERO SECTION
+   -------------------------------------------------------------------------- */
+.mm-hero {
+    background: radial-gradient(circle at 80% 20%, rgba(255, 101, 0, 0.12), transparent 45%),
+                radial-gradient(circle at 20% 80%, rgba(30, 62, 98, 0.08), transparent 40%),
+                #FFFFFF;
+    padding: 50px 0 60px;
+    border-bottom: 1px solid var(--mm-border);
+}
+
+.mm-hero-grid {
+    display: grid;
+    grid-template-columns: 1.15fr 1fr;
+    gap: 40px;
+    align-items: center;
+}
+
+.mm-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #FFF7ED;
+    color: var(--mm-orange);
+    border: 1.5px solid #FFEDD5;
+    padding: 6px 16px;
+    border-radius: var(--mm-radius-full);
+    font-size: 13.5px;
+    font-weight: 800;
+    margin-bottom: 20px;
+}
+
+.mm-hero-title {
+    font-size: clamp(26px, 4.5vw, 40px);
+    font-weight: 900;
+    color: var(--mm-navy);
+    line-height: 1.25;
+    margin: 0 0 16px;
+}
+
+.mm-hero-title span.highlight {
+    color: var(--mm-orange);
+    position: relative;
+    display: inline-block;
+}
+
+.mm-hero-lead {
+    font-size: 16.5px;
+    color: var(--mm-text-body);
+    line-height: 1.7;
+    margin: 0 0 24px;
+    font-weight: 500;
+}
+
+.mm-hero-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 30px;
+}
+
+.mm-hero-pill {
+    background: var(--mm-bg-alt);
+    border: 1px solid var(--mm-border);
+    padding: 7px 14px;
+    border-radius: var(--mm-radius-full);
+    font-size: 13.5px;
+    font-weight: 700;
+    color: var(--mm-navy-light);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.mm-hero-price-wrap {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    margin-bottom: 26px;
+    background: #F8FAFC;
+    border: 1.5px solid var(--mm-border);
+    border-radius: var(--mm-radius-md);
+    padding: 14px 20px;
+    width: fit-content;
+}
+
+.mm-price-label {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--mm-text-muted);
+}
+
+.mm-hero-price-current {
+    font-size: 32px;
+    font-weight: 900;
+    color: var(--mm-orange);
+}
+
+.mm-hero-price-old {
+    font-size: 20px;
+    color: var(--mm-text-light);
+    text-decoration: line-through;
+    font-weight: 600;
+}
+
+.mm-hero-price-save {
+    background: #FEF2F2;
+    color: #DC2626;
+    font-size: 12.5px;
+    font-weight: 800;
+    padding: 3px 10px;
+    border-radius: var(--mm-radius-full);
+}
+
+/* Pulsing Primary Button */
+.mm-btn-cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    background: linear-gradient(135deg, #FF6500 0%, #E05A00 100%);
+    color: #FFFFFF !important;
+    font-size: 19px;
+    font-weight: 900;
+    padding: 16px 36px;
+    border-radius: var(--mm-radius-full);
+    text-decoration: none;
+    box-shadow: var(--mm-shadow-glow);
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    border: none;
+    cursor: pointer;
+    animation: mmPulse 2.5s infinite;
+}
+
+.mm-btn-cta:hover {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 14px 35px rgba(255, 101, 0, 0.5);
+    color: #FFFFFF !important;
+}
+
+@keyframes mmPulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(255, 101, 0, 0.6);
+    }
+    70% {
+        box-shadow: 0 0 0 16px rgba(255, 101, 0, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(255, 101, 0, 0);
+    }
+}
+
+/* Hero Visual Card */
+.mm-hero-visual {
+    position: relative;
+    text-align: center;
+}
+
+.mm-hero-img-card {
+    background: #FFFFFF;
+    border: 2px solid var(--mm-border);
+    border-radius: var(--mm-radius-lg);
+    padding: 16px;
+    box-shadow: var(--mm-shadow-lg);
+    position: relative;
+    overflow: hidden;
+}
+
+.mm-hero-img-card img {
+    width: 100%;
+    height: auto;
+    border-radius: 14px;
+    transition: transform 0.4s ease;
+}
+
+.mm-hero-img-card:hover img {
+    transform: scale(1.03);
+}
+
+.mm-hero-floating-badge {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    background: #0B192C;
+    color: #FFFFFF;
+    padding: 8px 16px;
+    border-radius: var(--mm-radius-full);
+    font-size: 13px;
+    font-weight: 800;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+/* --------------------------------------------------------------------------
+   4. PRODUCT FEATURES GRID SECTION
+   -------------------------------------------------------------------------- */
+.mm-section {
+    padding: 60px 0;
+}
+
+.mm-section-alt {
+    background-color: var(--mm-bg-alt);
+}
+
+.mm-section-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.mm-section-title {
+    font-size: clamp(24px, 3.8vw, 34px);
+    font-weight: 900;
+    color: var(--mm-navy);
+    margin: 0 0 10px;
+}
+
+.mm-section-subtitle {
+    font-size: 16px;
+    color: var(--mm-text-muted);
+    max-width: 620px;
+    margin: 0 auto;
+}
+
+.mm-features-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+}
+
+.mm-feature-card {
+    background: #FFFFFF;
+    border: 1.5px solid var(--mm-border);
+    border-radius: var(--mm-radius-md);
+    overflow: hidden;
+    box-shadow: var(--mm-shadow-sm);
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+.mm-feature-card:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--mm-shadow-md);
+    border-color: var(--mm-orange);
+}
+
+.mm-feature-thumb {
+    width: 100%;
+    aspect-ratio: 1/1;
+    overflow: hidden;
+    background: #F8FAFC;
+}
+
+.mm-feature-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+}
+
+.mm-feature-card:hover .mm-feature-thumb img {
+    transform: scale(1.08);
+}
+
+.mm-feature-content {
+    padding: 20px;
+    text-align: center;
+    flex-grow: 1;
+}
+
+.mm-feature-title {
+    font-size: 17px;
+    font-weight: 800;
+    color: var(--mm-navy);
+    margin: 0 0 8px;
+}
+
+.mm-feature-desc {
+    font-size: 14px;
+    color: var(--mm-text-muted);
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* --------------------------------------------------------------------------
+   5. MID-PAGE CALLOUT BANNER
+   -------------------------------------------------------------------------- */
+.mm-callout-banner {
+    background: linear-gradient(135deg, #0B192C 0%, #1E3E62 100%);
+    color: #FFFFFF;
+    padding: 36px 0;
+    text-align: center;
+    border-top: 3px solid var(--mm-orange);
+}
+
+.mm-callout-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+}
+
+.mm-callout-text {
+    font-size: clamp(20px, 3vw, 26px);
+    font-weight: 900;
+    margin: 0;
+}
+
+.mm-callout-phone {
+    color: var(--mm-orange);
+    text-decoration: none;
+    border-bottom: 2px dashed var(--mm-orange);
+    padding-bottom: 2px;
+}
+
+/* --------------------------------------------------------------------------
+   6. BENEFITS SECTION
+   -------------------------------------------------------------------------- */
+.mm-benefits-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-top: 30px;
+}
+
+.mm-benefit-box {
+    background: #FFFFFF;
+    border: 1.5px solid var(--mm-border);
+    border-radius: var(--mm-radius-md);
+    padding: 24px;
+    box-shadow: var(--mm-shadow-sm);
+    transition: all 0.25s ease;
+}
+
+.mm-benefit-box:hover {
+    border-color: var(--mm-navy-light);
+    box-shadow: var(--mm-shadow-md);
+}
+
+.mm-benefit-icon {
+    font-size: 32px;
+    margin-bottom: 14px;
+    display: inline-block;
+}
+
+.mm-benefit-box h4 {
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--mm-navy);
+    margin: 0 0 10px;
+}
+
+.mm-benefit-box p {
+    font-size: 14.5px;
+    color: var(--mm-text-muted);
+    margin: 0;
+    line-height: 1.6;
+}
+
+/* --------------------------------------------------------------------------
+   7. INTERACTIVE FAQ ACCORDION
+   -------------------------------------------------------------------------- */
+.mm-faq-section {
+    padding: 60px 0;
+    background: #FFFFFF;
+}
+
+.mm-faq-wrap {
+    max-width: 860px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.mm-faq-item {
+    background: #F8FAFC;
+    border: 1.5px solid var(--mm-border);
+    border-radius: var(--mm-radius-md);
+    overflow: hidden;
+    transition: all 0.2s ease;
+}
+
+.mm-faq-item.active {
+    border-color: var(--mm-orange);
+    background: #FFFFFF;
+    box-shadow: var(--mm-shadow-sm);
+}
+
+.mm-faq-question {
+    padding: 18px 22px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 800;
+    color: var(--mm-navy);
+    user-select: none;
+    transition: color 0.2s ease;
+}
+
+.mm-faq-item.active .mm-faq-question {
+    color: var(--mm-orange);
+}
+
+.mm-faq-icon {
+    transition: transform 0.3s ease;
+    color: var(--mm-orange);
+}
+
+.mm-faq-item.active .mm-faq-icon {
+    transform: rotate(180deg);
+}
+
+.mm-faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.35s cubic-bezier(0, 1, 0, 1), padding 0.3s ease;
+    padding: 0 22px;
+    color: var(--mm-text-body);
+    font-size: 15px;
+    line-height: 1.65;
+}
+
+.mm-faq-item.active .mm-faq-answer {
+    max-height: 500px;
+    padding: 0 22px 20px;
+    transition: max-height 0.35s ease-in-out, padding 0.3s ease;
+}
+
+/* --------------------------------------------------------------------------
+   8. FOOTER & TRUST BADGES
+   -------------------------------------------------------------------------- */
+.mm-footer {
+    background: #071326;
+    color: #94A3B8;
+    padding: 50px 0 90px;
+    border-top: 2px solid #1E293B;
+    text-align: center;
+}
+
+.mm-footer-logo {
+    height: 48px;
+    margin: 0 auto 16px;
+    border-radius: 6px;
+    background: #fff;
+    padding: 4px;
+}
+
+.mm-footer-text {
+    font-size: 14px;
+    max-width: 500px;
+    margin: 0 auto 20px;
+    line-height: 1.6;
+}
+
+.mm-footer-copyright {
+    font-size: 13px;
+    color: #64748B;
+    border-top: 1px solid #1E293B;
+    padding-top: 20px;
+    margin-top: 20px;
+}
+
+/* --------------------------------------------------------------------------
+   9. FLOATING WHATSAPP & SOCIAL PROOF TOAST
+   -------------------------------------------------------------------------- */
+.mm-floating-wa {
+    position: fixed;
+    bottom: 80px;
+    right: 20px;
+    width: 56px;
+    height: 56px;
+    background: #25D366;
+    color: #FFFFFF;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 6px 20px rgba(37, 211, 102, 0.45);
+    z-index: 999;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.mm-floating-wa:hover {
+    transform: scale(1.12);
+    box-shadow: 0 8px 25px rgba(37, 211, 102, 0.6);
+    color: #FFFFFF;
+}
+
+/* Social Proof Toast */
+.mm-toast {
+    position: fixed;
+    bottom: 84px;
+    left: 20px;
+    background: #FFFFFF;
+    border: 1.5px solid #FFEDD5;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    padding: 12px 16px;
+    border-radius: var(--mm-radius-md);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    z-index: 998;
+    transform: translateY(140%);
+    opacity: 0;
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.4s ease;
+    max-width: 330px;
+    pointer-events: none;
+}
+
+.mm-toast.show {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.mm-toast-icon {
+    font-size: 26px;
+}
+
+.mm-toast-title {
+    margin: 0;
+    font-size: 13.5px;
+    font-weight: 800;
+    color: var(--mm-navy);
+}
+
+.mm-toast-desc {
+    margin: 2px 0 0;
+    font-size: 12px;
+    color: var(--mm-text-muted);
+}

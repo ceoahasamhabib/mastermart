@@ -1,0 +1,95 @@
+/*
+Theme Name: Master Mart
+Theme URI: https://mastermart.com/
+Author: Master Mart Team
+Author URI: https://mastermart.com/
+Description: Ultra-high converting, mobile-first e-commerce landing page WordPress theme with 1-click Cash on Delivery (COD) checkout, live district selector, phone validator, urgency countdown, and Meta Pixel/GTM conversion tracking.
+Version: 1.0.0
+Requires at least: 6.0
+Tested up to: 6.7
+Requires PHP: 7.4
+Text Domain: mastermart
+License: GNU General Public License v2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Tags: e-commerce, landing-page, one-column, custom-colors, custom-menu, featured-images, translation-ready
+*/
+
+:root {
+    /* Master Mart Brand Palette */
+    --mm-navy-dark: #071326;
+    --mm-navy: #0B192C;
+    --mm-navy-light: #1E3E62;
+    --mm-orange: #FF6500;
+    --mm-orange-hover: #E05A00;
+    --mm-orange-glow: rgba(255, 101, 0, 0.4);
+    --mm-gold: #F59E0B;
+    --mm-green: #10B981;
+    --mm-green-dark: #059669;
+    --mm-red: #EF4444;
+
+    /* Backgrounds & Surfaces */
+    --mm-bg: #F8FAFC;
+    --mm-bg-alt: #F1F5F9;
+    --mm-surface: #FFFFFF;
+    --mm-border: #E2E8F0;
+    --mm-border-focus: #FF6500;
+
+    /* Typography & Text */
+    --mm-text-dark: #0F172A;
+    --mm-text-body: #334155;
+    --mm-text-muted: #64748B;
+    --mm-text-light: #94A3B8;
+    --mm-font-base: 'Plus Jakarta Sans', 'Hind Siliguri', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --mm-font-bengali: 'Hind Siliguri', 'Noto Sans Bengali', system-ui, sans-serif;
+
+    /* Spacing & Radii */
+    --mm-radius-sm: 8px;
+    --mm-radius-md: 14px;
+    --mm-radius-lg: 20px;
+    --mm-radius-full: 9999px;
+    --mm-shadow-sm: 0 2px 8px rgba(11, 25, 44, 0.05);
+    --mm-shadow-md: 0 8px 24px rgba(11, 25, 44, 0.08);
+    --mm-shadow-lg: 0 16px 40px rgba(11, 25, 44, 0.12);
+    --mm-shadow-glow: 0 10px 30px rgba(255, 101, 0, 0.35);
+}
+
+/* Minimal Box Reset */
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: var(--mm-font-base);
+    background-color: var(--mm-bg);
+    color: var(--mm-text-dark);
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+a {
+    color: var(--mm-orange);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+a:hover {
+    color: var(--mm-orange-hover);
+}
+
+button, input, textarea, select {
+    font-family: inherit;
+}
