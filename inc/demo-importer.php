@@ -326,7 +326,7 @@ function mastermart_execute_demo_import() {
     mastermart_ensure_page( 'refund-policy', 'রিটার্ন ও রিফান্ড পলিসি', '', '<p>পণ্য গ্রহণের সময় কোনো ত্রুটি থাকলে তাৎক্ষণিক ডেলিভারিম্যানকে রিটার্ন করুন অথবা ২৪ ঘণ্টার মধ্যে আমাদের হেল্পলাইনে জানান।</p>' );
     mastermart_ensure_page( 'privacy-policy', 'গোপনীয়তা নীতি (Privacy Policy)', '', '<p>গ্রাহকের ব্যক্তিগত ও অর্ডারের তথ্য ১০০% নিরাপদ ও সুরক্ষিত রাখা হয়।</p>' );
     mastermart_ensure_page( 'terms-conditions', 'শর্তাবলী ও নিয়মাবলী (Terms & Conditions)', '', '<p>Master Mart থেকে অর্ডারকৃত পণ্যের শর্তাবলী ও নিয়মনীতিসমূহ।</p>' );
-    mastermart_ensure_page( 'contact', 'যোগাযোগ ও হেল্পলাইন (Contact Us)', '', '<p>হটলাইন: 01400828464 | হোয়াটসঅ্যাপ: 01400828464 | ইমেইল: support@mastermart.com</p>' );
+    mastermart_ensure_page( 'contact', 'যোগাযোগ ও হেল্পলাইন (Contact Us)', '', '<p>হটলাইন: 01805060688 | হোয়াটসঅ্যাপ: 01805060688 | ইমেইল: support@mastermart.com</p>' );
     mastermart_ensure_page( 'about-us', 'আমাদের সম্পর্কে (About Us)', '', '<p>Master Mart বাংলাদেশের একটি বিশ্বস্ত অনলাইন শপ, যা গুণগত মানসম্পন্ন ফিটনেস ও লাইফস্টাইল পণ্য পৌঁছে দেয় গ্রাহকের দোরগোড়ায়।</p>' );
 
     // 3. Create Primary Navigation Menu
@@ -402,7 +402,7 @@ function mastermart_execute_demo_import() {
     }
 
     // 5. Configure Theme Options Defaults
-    $demo_phone = '01400828464';
+    $demo_phone = '01805060688';
     update_option( 'mastermart_hotline_phone', $demo_phone );
     update_option( 'mastermart_whatsapp_number', $demo_phone );
     update_option( 'mastermart_shipping_inside', 80 );

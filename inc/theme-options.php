@@ -73,14 +73,14 @@ function mastermart_render_settings_page() {
                     <tr>
                         <th scope="row"><label for="mastermart_hotline_phone">Hotline Phone Number</label></th>
                         <td>
-                            <input type="text" id="mastermart_hotline_phone" name="mastermart_hotline_phone" value="<?php echo esc_attr( get_option( 'mastermart_hotline_phone', '01824035313' ) ); ?>" class="regular-text" placeholder="01824035313">
+                            <input type="text" id="mastermart_hotline_phone" name="mastermart_hotline_phone" value="<?php echo esc_attr( get_option( 'mastermart_hotline_phone', '01805060688' ) ); ?>" class="regular-text" placeholder="01805060688">
                             <p class="description">Displays in the header, callout banners, and mobile sticky bar.</p>
                         </td>
                     </tr>
                     <tr>
                         <th scope="row"><label for="mastermart_whatsapp_number">WhatsApp Chat Number</label></th>
                         <td>
-                            <input type="text" id="mastermart_whatsapp_number" name="mastermart_whatsapp_number" value="<?php echo esc_attr( get_option( 'mastermart_whatsapp_number', '01824035313' ) ); ?>" class="regular-text" placeholder="01824035313">
+                            <input type="text" id="mastermart_whatsapp_number" name="mastermart_whatsapp_number" value="<?php echo esc_attr( get_option( 'mastermart_whatsapp_number', '01805060688' ) ); ?>" class="regular-text" placeholder="01805060688">
                             <p class="description">Target phone number for the floating WhatsApp button.</p>
                         </td>
                     </tr>

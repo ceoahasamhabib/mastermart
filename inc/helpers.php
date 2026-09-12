@@ -14,16 +14,16 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Get hotline phone number.
  */
 function mastermart_get_phone() {
-    $phone = get_option( 'mastermart_hotline_phone', '01824035313' );
-    return ! empty( $phone ) ? $phone : '01824035313';
+    $phone = get_option( 'mastermart_hotline_phone', '01805060688' );
+    return ! empty( $phone ) ? $phone : '01805060688';
 }
 
 /**
  * Get WhatsApp number.
  */
 function mastermart_get_whatsapp() {
-    $wa = get_option( 'mastermart_whatsapp_number', '01824035313' );
-    return ! empty( $wa ) ? preg_replace( '/[^0-9]/', '', $wa ) : '01824035313';
+    $wa = get_option( 'mastermart_whatsapp_number', '01805060688' );
+    return ! empty( $wa ) ? preg_replace( '/[^0-9]/', '', $wa ) : '01805060688';
 }
 
 /**
